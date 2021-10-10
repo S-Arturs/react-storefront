@@ -1,4 +1,4 @@
-Run npm i to install all required packages, start endpoint on port 4000 and it should work.
+### Run npm i to install all required packages, start endpoint on port 4000 and it should work.
 
 # Getting Started with Create React App
 

@@ -1,3 +1,5 @@
+Run npm i to install all required packages, start endpoint on port 4000 and it should work.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

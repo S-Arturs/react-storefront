@@ -1,0 +1,79 @@
+@font-face {
+  font-family: "raleway";
+  src: url("./Assets/Fonts/Raleway-Regular.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: "raleway";
+  src: url("./Assets/Fonts/Raleway-Light.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "raleway";
+  src: url("./Assets/Fonts/Raleway-Medium.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: "raleway";
+  src: url("./Assets/Fonts/Raleway-SemiBold.woff") format("woff");
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: "raleway";
+  src: url("./Assets/Fonts/Raleway-Bold.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: "robotocondensed";
+  src: url("./Assets/Fonts/RobotoCondensed-Bold.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: "sourcesanspro";
+  src: url("./Assets/Fonts/SourceSansPro-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "roboto";
+  src: url("./Assets/Fonts/Roboto-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "roboto";
+  src: url("./Assets/Fonts/Roboto-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+}
+
+html {
+  overflow-y: scroll;
+}
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+:root {
+  height: 100%;
+  --c-primary: #5ece7b;
+  --c-black: #1d1f22;
+  --c-primary-darkened: #36b056;
+  color: #1d1f22;
+}

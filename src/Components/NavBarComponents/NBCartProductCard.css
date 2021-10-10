@@ -1,0 +1,192 @@
+.NBCartContainer{
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 42px;
+    justify-content: space-between;
+}
+.QuantityContainer{
+    font-family: raleway;
+    font-weight: 600;
+    margin-top: 0;
+    width: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.NamePriceAttributeContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 180px;
+    text-align: left;
+}
+.ImageContainer{
+    pointer-events: none;
+    position: relative;
+    right: 0%;
+    overflow:hidden;
+    width: 105px;
+    height: 137px;
+}
+.ItemName{
+    font-size: 16;
+    line-height: 25.6px;
+    font-family: raleway;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+.ItemBrandName{
+    font-size: 16;
+    line-height: 25.6px;
+    font-family: raleway;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+.MiniCartPrice{
+    font-family: raleway;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+#ProductImage{
+    pointer-events: none;
+    z-index: -1;
+    position: relative;
+    width:100%; 
+    height:100%;
+    object-fit: cover;
+}
+#DecrementButton{
+    position: absolute;
+}
+.RemoveItem{
+    /* z-index: 1; */
+    position: relative;
+    left: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--c-black);
+    background-color: white;
+    height: 24px;
+    width: 24px;
+}
+.UniversalButton{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--c-black);
+    background-color: white;
+    height: 24px;
+    width: 24px;
+}
+.SVGLine{
+    position: absolute;
+}
+#DecrementRemoveButton{
+    display: flex;
+    flex-direction: row;
+}
+.ImageContainerForCart{
+    position: relative;
+    right: 0%;
+    overflow: hidden;
+    width: 141px;
+    height: 185px;
+}
+hr{
+    border-top: 1px solid #E5E5E5;
+    margin-bottom: 20px;
+    margin-top: 0px;
+}
+.NextButton{
+    font-size: 20px;
+    text-align: right;
+    height: 100%;
+    border-width: 0px;
+    width: 50%;
+    background-color: rgba(0, 0, 0, 0);
+    /* z-index: 1; */
+    right: 0%;
+    position: absolute;
+
+}
+.PreviousButton{ 
+    text-align: left;
+    height: 100%;
+    border-width: 0px;
+    /* z-index: 1; */
+    width: 50%;
+    background-color: rgba(173, 165, 165, 0);
+    left: 0%;
+    position: absolute;
+}
+.SVGArrow{
+    position: relative;
+    /* top: 50%; */
+    height: 12px; 
+    fill: white; 
+    filter: invert(100%) sepia(0%) saturate(7470%) hue-rotate(116deg) brightness(109%) contrast(109%);
+}
+
+.cartContainer{
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 42px;
+    justify-content: space-between;
+}
+.cartContainer .NamePriceAttributeContainer{
+    width: initial;
+}
+.cartContainer .NamePriceAttributeContainer .ItemName{
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.cartContainer .NamePriceAttributeContainer .ItemBrandName{
+    font-size: 30px;
+    margin-bottom: 16px;
+    font-weight: 800;
+}
+
+.cartContainer .NamePriceAttributeContainer .MiniCartPrice{
+    font-size: 24px;
+}
+
+.cartContainer div .QuantityContainer {
+    width: initial;
+    height: 100%;
+    margin-right: 12px;
+}
+
+.cartContainer div .QuantityContainer .UniversalButton {
+    width: 45px;
+    height: 45px;
+}
+
+.cartContainer div .QuantityContainer .UniversalButton .SVGLine{
+    width: 15px;
+}
+
+.cartContainer div .QuantityContainer .QuantityNumberContainer {
+    font-size: 24px;
+}
+
+.cartContainer div .QuantityContainer .DecrementRemoveButton {
+    height: 45px;
+}
+
+.cartContainer div .QuantityContainer .DecrementRemoveButton #DecrementButton {
+    width: 45px;
+    height: 45px;
+}
+
+.cartContainer div .QuantityContainer .RemoveItem {
+    /* z-index: 1; */
+    width: 45px;
+    height: 45px;
+    left: -64px;
+}

@@ -1,0 +1,44 @@
+.MiniAttributesButtons{
+    margin-right: 8px;
+    min-height: 24px;
+    border: 1px solid var(--c-black);
+    box-sizing: border-box;
+    height:   24px ;
+    min-width:  24px ;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 4px;
+    line-height: 0;
+    margin-bottom: 0px ;
+    padding-right: 4px;
+    padding-left: 4px;
+}
+
+#ProductCardAttributeName{
+    margin-left: 16px;
+    margin-right: 12px;
+    font-family: raleway;
+
+}
+
+.AttributesButtons{
+    margin-right: 8px;
+    min-height: 24px;
+    border: 1px solid var(--c-black);
+    box-sizing: border-box;
+    height:  45px ;
+    min-width:  63px ;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 4px;
+    line-height:0;
+    margin-bottom: 12px ;
+    padding-right: 4px;
+    padding-left: 4px;
+}
+
+#ProductPageAttributeName{
+    font-size: 18px;
+    font-family: robotocondensed;
+    font-weight: 900;
+}

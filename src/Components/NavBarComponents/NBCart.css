@@ -1,0 +1,68 @@
+#NBCartContainer{
+    text-align: left;
+    right: 8%;
+    z-index: 100;
+    padding: 16px;
+    padding-top: 8px;
+    padding-bottom: 20px;
+    background-color: white;
+    position: absolute;
+    top: 80px;
+    width: 325px;
+    display: flex;
+    flex-direction: column;
+    max-height: 85vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+#MyBag{
+    font-family: raleway;
+    font-weight: 800;
+    margin-bottom: 25px;
+}
+#ItemCount{
+    font-weight: 600;
+}
+#TotalContainer{
+    margin-bottom: 48px;
+    font-family: roboto;
+    font-weight: 500;
+    font-size: 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+#TotalContainerAmount{
+    font-family: raleway;
+    font-weight: 800;
+}
+#ButtonsContainer{
+    
+    font-size: 14px;
+    line-height: 16.8px;
+    display: flex;
+    flex-direction: row;
+    height: 43px;
+}
+#ViewBagLink{
+
+    flex: 1;
+    margin-right: 12px;
+}
+#ViewBagButton{
+    font-family: raleway;
+    font-weight: 700;
+    width: 100%;
+    height: 100%;
+    background: #FFFFFF;
+    border: 1px solid var(--c-black);
+    box-sizing: border-box;
+}
+#CheckOutButton{
+    font-family: raleway;
+    font-weight: 700;
+    color: white;
+    flex: 1;
+    background: var( --c-primary);
+    border: 0px;
+}

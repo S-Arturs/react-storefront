@@ -1,0 +1,98 @@
+.App {
+  z-index: 2;
+  text-align: center;
+  height: 100%;
+}
+.App-header {
+  z-index: 20;
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+#NavBar {
+  z-index: 2;
+}
+
+#TintContainer {
+  z-index: 1;
+  top: 80px;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background: rgba(57, 55, 72, 0.22);
+  filter: brightness(82%);
+  animation: fadeIn 0.3s;
+  -webkit-animation: fadeIn 0.3s;
+  -moz-animation: fadeIn 0.3s;
+  -o-animation: fadeIn 0.3s;
+  -ms-animation: fadeIn 0.3s;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-o-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-ms-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

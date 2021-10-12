@@ -3,35 +3,38 @@ import { Query } from "@tilework/opus";
 
 client.setEndpoint("http://localhost:4000/");
 async function fetchProducts(category) {
-  const query = new Query(
+  let query;
+  if (category === "all") {
+    category = "";
+  }
+
+  query = new Query(
     `          
-            category(input: {title: "${category}"}){
-            name
-            products{
-                brand
-                name
-                id
-                inStock
-                gallery
-                prices{
-                    currency
-                    amount
-                }
-                attributes
-        {
+  category(input: {title: "${category}"}){
+    name
+    products{
+      name
+      brand   
+      id
+      inStock
+      gallery
+      prices{
+        currency
+        amount
+        }
+      attributes{
+        id
+        name
+        type
+        items{
+          displayValue
+          value
           id
-          name
-          type
-          items
-          {
-            displayValue
-            value
-            id
           }
         }
-            }
-            } 
-            `
+      }
+    } 
+`
   );
   return performFetch(query);
 }
@@ -91,9 +94,13 @@ async function performFetch(query) {
   } catch {
     return queryResult;
   }
-  if (Object.keys(queryResult)[0] === 0 || queryResult[Object.keys(queryResult)[0]] === null) {   
+  if (
+    Object.keys(queryResult)[0] === 0 ||
+    queryResult[Object.keys(queryResult)[0]] === null
+  ) {
     queryResult = "error";
   }
+  console.log(queryResult);
   return queryResult;
 }
 

@@ -21,10 +21,11 @@ class Attributes extends React.Component {
     }
   }
   render() {
+    console.log(this.props.origin)
     return (
       <div>
-        {this.props.origin === "productCard" ? (
-          <span id="ProductCardAttributeName">{this.props.attribute.name}</span>
+        {this.props.origin === "productCard" || this.props.origin === "NBCart" ? (
+          <p id="ProductCardAttributeName">{this.props.attribute.name}</p>
         ) : this.props.origin === "productPage" ? (
           <p id="ProductPageAttributeName">{this.props.attribute.name}</p>
         ) : (

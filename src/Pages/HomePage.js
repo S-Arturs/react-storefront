@@ -36,7 +36,7 @@ class Home extends React.Component {
 
   async componentDidUpdate() {
     if (this.props.match.params.category !== this.state.prevCategory) {
-      await this.loadFetchedData()
+       await this.loadFetchedData()
     }
   }
   async loadFetchedData(){
@@ -54,6 +54,9 @@ class Home extends React.Component {
   }
   render() {
     if (!this.state.fetched) return null;
+    this.state.fetchedData.category.products.map((product, id) => (
+      console.log(product)
+    ))
     return (
       <div id="CenteringContainer">
         <div id="ShopContainer">

@@ -34,18 +34,23 @@ class NBCartProductCard extends React.Component {
     };
   }
   componentDidUpdate() {
-    this.recalculateTotalAmount()
+    // this.recalculateTotalAmount()
   }
   
   incrementQuantity() {
     this.props.incrementQuantity(this.props.index);
-    this.recalculateTotalAmount();
+    this.forceUpdate();
+    // this.recalculateTotalAmount();
     this.props.refreshParent();
   }
 
   decrementQuantity() {
+    if(this.props.cart[this.props.index].quantity == 1){
+      this.removeItem()
+      return
+    }
     this.props.decrementQuantity(this.props.index);
-    this.recalculateTotalAmount();
+    this.forceUpdate();
     this.props.refreshParent();
   }
 
@@ -65,8 +70,7 @@ class NBCartProductCard extends React.Component {
     }
   }
   calculateTotalAmount(){
-    return (this.props.cart[this.props.index].prices[this.props.currency.id]
-        .amount * this.props.product.quantity
+    return (this.props.cart[this.props.index].prices[this.props.currency.id].amount
     ).toLocaleString("en-US", {
       style: "currency",
       currency: this.props.currency.name,
@@ -172,7 +176,8 @@ class NBCartProductCard extends React.Component {
                     <img
                       className="SVGArrow"
                       src={Arrow}
-                      style={{ transform: "rotate(-90deg)" }}
+                      disabled={this.props.cart[this.props.index].gallery.length < 1}
+                      style={{ transform: "rotate(-90deg)", opacity: `${this.props.cart[this.props.index].gallery.length - 1}` } }
                       alt="line"
                     ></img>{" "}
                   </button>
@@ -188,9 +193,10 @@ class NBCartProductCard extends React.Component {
                   />
                   <button className="NextButton" onClick={() => this.nextPicture()}>
                     <img
+                      disabled={this.props.cart[this.props.index].gallery.length < 1}
                       className="SVGArrow"
                       src={Arrow}
-                      style={{ transform: "rotate(90deg)" }}
+                      style={{ transform: "rotate(90deg)", opacity: `${this.props.cart[this.props.index].gallery.length - 1}` }}
                       alt="line"
                     ></img>
                   </button>

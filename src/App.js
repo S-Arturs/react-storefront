@@ -37,10 +37,13 @@ class App extends React.Component {
     };
   }
   async componentDidMount() {
+    let categories;
     const queryResult = await fetchCategories();
     if (queryResult !== "error") {
+      categories = JSON.parse(JSON.stringify(queryResult.categories));
+      categories.unshift({name: "all"})
       this.setState({
-        categories: queryResult.categories,
+        categories: categories,
         isCartFocused: false,
       });
     }
@@ -72,11 +75,11 @@ class App extends React.Component {
               <Redirect
                 exact
                 from="/"
-                to={`/shop/${this.state.categories[0].name}`}
+                to={`/shop/all`}
               />
               <Route
                 exact
-                path="/shop/:category"
+                path="/shop/:category?"
                 render={(props) => <HomePage {...props} />}
               />
               <Route

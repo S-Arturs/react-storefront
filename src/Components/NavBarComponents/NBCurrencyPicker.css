@@ -9,17 +9,26 @@
 #CurrenciesContainer {
     display: flex;
     flex-direction: column;
-    margin-top: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     margin-left: 16px;
     margin-right: 16px;  
 }
 .CurrencyButton {
+    border-radius: 25%, 10%;
     text-align: left;
     font-size: 18px;
-    margin-bottom: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    width: 100%;
     font-family: raleway;
     font-weight: 700;
     color: var(--c-black);
     border-width: 0px;
     background: rgba(255, 255, 255, 0);
+}
+.CurrencyButton:hover {
+    transform: scale(1.1);
+    background-color: blue;
+    /* box-shadow: 0px 0px 21px 8px rgba(0,0,0,0.12) */
 }

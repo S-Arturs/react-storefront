@@ -34,8 +34,9 @@ class NBCart extends React.Component {
     this.setQuantityAndAmount()
   }
 
-  getRefresh() {
+  getRefresh() {  
     this.forceUpdate();
+    this.props.refreshParent();
   }
 
   componentDidUpdate() {

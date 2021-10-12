@@ -27,6 +27,7 @@ const mapDispatchToProps = (dispatch) => {
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
+    this.getRefresh = this.getRefresh.bind(this);
     this.getCloseCurrency = this.getCloseCurrency.bind(this);
     this.getTint = this.getTint.bind(this);
     this.state = {
@@ -54,6 +55,10 @@ class NavBar extends React.Component {
     this.setState({ showCart: false });
     this.props.sendTint();
   }
+
+  getRefresh() {
+    this.forceUpdate();
+  }
   handleOutsideClick() {
     if (this.state.showCart) {
       this.setState({ showCart: false, removedCart: true });
@@ -65,6 +70,7 @@ class NavBar extends React.Component {
     }
   }
   handleCartButtonClick() {
+    this.setState({showCurrency: false})
     if (!this.state.showCart && !this.state.removedCart) {
       this.setState({ showCart: true, removedCart: false });
       this.props.sendTint();
@@ -82,7 +88,13 @@ class NavBar extends React.Component {
       : (selectedStyle = {});
     return selectedStyle;
   }
-
+  totalQuantityOfItems() {
+    let totalQuantity = 0;
+    this.props.cart.forEach(element => {
+      totalQuantity += element.quantity
+    });
+    return totalQuantity
+  }
   render() {
     if (this.props.categories.length === 0) return null;
     return (
@@ -136,14 +148,14 @@ class NavBar extends React.Component {
             onClick={() => this.handleCartButtonClick()}
           >
             {this.props.cart.length ? (
-              <div id="ItemAmountCircle">{this.props.cart.length}</div>
+              <div id="ItemAmountCircle">{this.totalQuantityOfItems()}</div>
             ) : (
               <div />
             )}
             <img src={Cart} style={{ height: "20px" }} alt="cart"></img>
           </button>
           <OutsideClickHandler onOutsideClick={() => this.handleOutsideClick()}>
-            <NBCart expanded={this.state.showCart} sendTint={this.getTint} />
+            <NBCart expanded={this.state.showCart} sendTint={this.getTint} refreshParent={this.getRefresh} />
           </OutsideClickHandler>
         </div>
       </div>

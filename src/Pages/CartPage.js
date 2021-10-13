@@ -17,6 +17,7 @@ class Cart extends React.Component {
     this.state = {}
     
   }
+  
   // force refresh when a children component changes
   getRefresh() {
     this.forceUpdate();
@@ -24,8 +25,8 @@ class Cart extends React.Component {
 
   render() {
     return (
-      <div id="CartContainer">
-        <h1 id="CartTitle">CART</h1>
+      <div className="CartContainer">
+        <h1 className="CartTitle">CART</h1>
           {this.props.cart.map((product, index) => (
               <NBCartProductCard origin={"cart"} refreshParent={this.getRefresh} index={index} product={product} key={index} />
             ))}

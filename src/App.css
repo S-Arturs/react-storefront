@@ -34,11 +34,11 @@ body {
   margin: 0;
 }
 
-#NavBar {
+.NavBar {
   z-index: 2;
 }
 
-#TintContainer {
+.TintContainer {
   z-index: 1;
   top: 80px;
   position: fixed;

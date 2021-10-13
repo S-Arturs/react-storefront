@@ -9,6 +9,8 @@ import {
   incrementQuantity,
   removeFromCart,
 } from "../../Actions";
+import { getFormattedCurrency } from "../../Helpers/CurrencyFormatter";
+import { subscribeAfter } from 'redux-subscribe-action';
 
 const mapStateToProps = (state) => {
   return {
@@ -29,18 +31,16 @@ class NBCartProductCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      totalAmount: this.calculateTotalAmount(),
+      totalAmount: getFormattedCurrency(this.props.currency.name, this.props.cart[this.props.index].prices[this.props.currency.id].amount),
       pictureId: 0,
     };
   }
-  componentDidUpdate() {
-    // this.recalculateTotalAmount()
-  }
+  unsubscribe = subscribeAfter(
+    () => this.forceUpdate()
+  );
   
   incrementQuantity() {
     this.props.incrementQuantity(this.props.index);
-    this.forceUpdate();
-    // this.recalculateTotalAmount();
     this.props.refreshParent();
   }
 
@@ -50,7 +50,6 @@ class NBCartProductCard extends React.Component {
       return
     }
     this.props.decrementQuantity(this.props.index);
-    this.forceUpdate();
     this.props.refreshParent();
   }
 
@@ -70,11 +69,7 @@ class NBCartProductCard extends React.Component {
     }
   }
   calculateTotalAmount(){
-    return (this.props.cart[this.props.index].prices[this.props.currency.id].amount
-    ).toLocaleString("en-US", {
-      style: "currency",
-      currency: this.props.currency.name,
-    })
+    this.setState({totalAmount: getFormattedCurrency(this.props.currency.name, this.props.cart[this.props.index].prices[this.props.currency.id].amount)})
   }
 
   nextPicture() {
@@ -95,6 +90,7 @@ class NBCartProductCard extends React.Component {
 
   render() {
     // this component also can be called by different parent components, so style depends on the origin
+    if(typeof this.props.cart[this.props.index] === 'undefined') return null
     let className = this.props.origin + "Container";
     return (
       <div style={this.props.origin === "cart" ? { width: "100%" } : {}}>
@@ -122,7 +118,7 @@ class NBCartProductCard extends React.Component {
             </div>
           </div>
           <div style={{ display: "flex", flexDirection: "row" }}>
-            <div className="QuantityContainer">
+            <div className="QuantityContainerNB">
               <button
                 className="UniversalButton"
                 onClick={() => this.incrementQuantity()}
@@ -138,10 +134,9 @@ class NBCartProductCard extends React.Component {
               <div className="QuantityNumberContainer">
                 {this.props.cart[this.props.index].quantity}
               </div>
-              <div id="DecrementRemoveButton">
+              <div className="DecrementRemoveButton">
                 <button
-                  id="DecrementButton"
-                  className="UniversalButton"
+                  className="DecrementButton"
                   disabled={this.props.cart[this.props.index].quantity < 1}
                   onClick={() => this.decrementQuantity()}
                 >
@@ -183,7 +178,7 @@ class NBCartProductCard extends React.Component {
                   </button>
 
                   <img
-                    id="ProductImage"
+                    className="ProductImage"
                     src={
                       this.props.cart[this.props.index].gallery[
                         this.state.pictureId
@@ -205,7 +200,7 @@ class NBCartProductCard extends React.Component {
             ) : (
               <div className="ImageContainer">
                 <img
-                  id="ProductImage"
+                  className="ProductImage"
                   src={
                     this.props.cart[this.props.index].gallery[
                       this.state.pictureId

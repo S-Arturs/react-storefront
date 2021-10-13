@@ -2,7 +2,7 @@ button:not([disabled]) {
   cursor: pointer;
 }
 
-#NavBar {
+.NavBar {
   background-color: white;
   position: fixed;
   z-index: 10;
@@ -38,20 +38,20 @@ button:not([disabled]) {
 .Logo:active {
   transform: scale(0.9);
 }
-#CategoriesContainer {
+.CategoriesContainer {
   left: 24px;
   position: relative;
   display: flex;
   justify-content: left;
   width: 45%;
 }
-#CurrencyCartContainer {
+.CurrencyCartContainer {
   display: flex;
 
   width: 45%;
   justify-content: right;
 }
-#LogoContainer {
+.LogoContainer {
   width: 10%;
   display: flex;
   justify-content: center;
@@ -68,7 +68,7 @@ button:not([disabled]) {
   font-family: raleway;
   font-weight: 700;
 }
-#ItemAmountCircle {
+.ItemAmountCircle {
   top: 20%;
   left: 60%;
   position: absolute;

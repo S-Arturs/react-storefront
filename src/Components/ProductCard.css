@@ -1,31 +1,31 @@
 .hover{
     box-shadow: 0px 4px 35px 0px #a8acb030;
 }
-#Image {
+.Image {
   height: 90%;
   max-width: 90%;
   object-fit: scale-down;
 }
-#CardContainer {
+.CardContainer {
   position: relative;
   width: 100%;
   padding-bottom: 16px;
 }
 
-#CardContainer:hover {
+.CardContainer:hover {
     box-shadow: 0px 4px 35px 0px #a8acb030;
   }
 
 a {
   text-decoration: none;
 }
-#DummyDiv {
+.DummyDiv {
   display: flex;
   justify-content: center;
   height: 50vh;
 }
 
-#Price {
+.Price {
     font-size: 18px;
   text-align: left;
   color: var(--c-black);
@@ -34,7 +34,7 @@ a {
   font-weight: 700;
   margin-bottom: 12px;
 }
-#Name {
+.Name {
     font-size: 18px;
   text-align: left;
   color: var(--c-black);
@@ -42,7 +42,7 @@ a {
   padding-left: 16px;
   font-weight: 300;
 }
-#EmptyCartCircle{
+.EmptyCartCircle{
   border: 0px;
     filter: drop-shadow(0px 4px 11px rgba(29, 31, 34, 0.1));
     margin-left: 80%;
@@ -57,14 +57,14 @@ a {
     border-radius: 50%;
     background-color: var(--c-primary);
 }
-#EmptyCartCircle:hover{
+.EmptyCartCircle:hover{
     background-color: var(--c-primary-darkened);
 }
-#EmptyCartCircle:active{
+.EmptyCartCircle:active{
   transform: scale(0.9);
   background-color: var(--c-primary-darkened);
 }
-#ProductCardQuantityContainer{
+.ProductCardQuantityContainer{
  
   margin-top: 4px;
   display: flex;
@@ -81,21 +81,25 @@ a {
   height: 24px;
   width: 24px;
 }
-#QuantityName{
-    margin-left: 16px;
-    margin-right: 12px;
-    font-family: raleway;
+.QuantityName{
+  margin-right: 12px;
+  font-family: raleway;
 }
-#Quantity{
+.Quantity{
   text-align: center;
   width: 24px;
   font-family: raleway;
 }
-#OutOfStock{
+.OutOfStock{
   pointer-events: none;
   font-size: 24px;
   font-family: raleway;
   position: absolute;
   top: 200px;
   left: 30%;
+}
+.ExpandAttributes{
+  height: auto;
+  margin-top: -8px;
+  margin-left: 16px;
 }

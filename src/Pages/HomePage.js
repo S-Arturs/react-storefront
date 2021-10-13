@@ -52,21 +52,21 @@ class Home extends React.Component {
         this.setState({ fetched: false });
       }
   }
+  setProductCards(){
+    return this.state.fetchedData.category.products.map((product, id) => (
+      <ProductCard product={product} key={id} />
+    ))
+  }
   render() {
     if (!this.state.fetched) return null;
-    this.state.fetchedData.category.products.map((product, id) => (
-      console.log(product)
-    ))
     return (
-      <div id="CenteringContainer">
-        <div id="ShopContainer">
-          <h1 id="CategoryHeader">
+      <div className="CenteringContainer">
+        <div className="ShopContainer">
+          <h1 className="CategoryHeader">
             {capitalizeFirstLetter(this.props.match.params.category)}
           </h1>
-          <div id="Window">
-            {this.state.fetchedData.category.products.map((product, id) => (
-              <ProductCard product={product} key={id} />
-            ))}
+          <div className="Window">
+            {this.setProductCards()}
           </div>
         </div>
       </div>

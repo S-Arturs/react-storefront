@@ -8,6 +8,7 @@ import EmptyCartIcon from "../Assets/SVG/Vector.svg";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { addToCart } from "../Actions";
+import { getFormattedCurrency } from "../Helpers/CurrencyFormatter";
 
 const mapStateToProps = (state) => {
   return {
@@ -100,10 +101,7 @@ class ProductCard extends React.Component {
   amountOfCurrency(){
     let id = this.props.currency.id;
     let amount = this.props.product.prices[id].amount;
-    return amount.toLocaleString("en-US", {
-      style: "currency",
-      currency: this.props.currency.name,
-    })
+    return getFormattedCurrency(this.props.currency.name, amount)
   }
   render() {
     return (
@@ -113,29 +111,30 @@ class ProductCard extends React.Component {
         }
         onMouseLeave={() => this.setState({ expanded: false })}
         style={{ opacity: this.props.product.inStock ? 1 : 0.5 }}
-        id="CardContainer"
+        className="CardContainer"
       >
         <p
-          id="OutOfStock"
+          className="OutOfStock"
           style={{ opacity: this.props.product.inStock ? 0 : 1 }}
         >
           OUT OF STOCK
         </p>
         <Link to={`product/${this.props.product.id}`}>
-          <div id="DummyDiv">
-            <img id="Image" src={this.props.product.gallery[0]} alt="product"/>
+          <div className="DummyDiv">
+            <img className="Image" src={this.props.product.gallery[0]} alt="product"/>
           </div>
-          <p id="Name">
+          <p className="Name">
             {" "}
             {this.props.product.brand + " " + this.props.product.name}
           </p>
-          <p id="Price">
+          <p className="Price">
             {this.amountOfCurrency()}
           </p>
         </Link>
         {/* using package that lets us smoothly expand components */}
+        <div className="ExpandAttributes">
         <Expand open={this.state.expanded}>
-          <button id="EmptyCartCircle" onClick={() => this.addToCartHandler()}>
+          <button className="EmptyCartCircle" onClick={() => this.addToCartHandler()}>
             <img src={EmptyCartIcon} alt="cart"/>
           </button>
           {this.props.product.attributes.map((e, id) => (
@@ -147,8 +146,8 @@ class ProductCard extends React.Component {
               key={id}
             />
           ))}
-          <div id="ProductCardQuantityContainer">
-            <span id="QuantityName"> Quantity </span>
+          <div className="ProductCardQuantityContainer">
+            <span className="QuantityName"> Quantity </span>
             <button
               className="ProductCardQuantityContainerButton"
               disabled={this.state.quantity < 1}
@@ -159,7 +158,7 @@ class ProductCard extends React.Component {
               <img src={Line} alt="line"></img>
             </button>
             <div>
-              <div id="Quantity">{this.state.quantity}</div>
+              <div className="Quantity">{this.state.quantity}</div>
             </div>
             <button
               className="ProductCardQuantityContainerButton"
@@ -171,9 +170,10 @@ class ProductCard extends React.Component {
             </button>
           </div>
           <Expand open={this.state.check}>
-            <span id="QuantityName">Please select all attributes</span>
+            <span className="QuantityName">Please select all attributes</span>
           </Expand>
         </Expand>
+        </div>
       </div>
     );
   }

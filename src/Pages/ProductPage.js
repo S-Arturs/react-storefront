@@ -3,7 +3,9 @@ import "./ProductPage.css";
 import Attributes from "../Components/Attributes";
 import { connect } from "react-redux";
 import { fetchProductPage } from "../Api/Fetch";
-import {addToCart } from "../Actions";
+import { addToCart } from "../Actions";
+import { getFormattedCurrency } from "../Helpers/CurrencyFormatter";
+import DOMPurify from "dompurify";
 
 const mapStateToProps = (state) => {
   return {
@@ -52,7 +54,7 @@ class Product extends React.Component {
       allowAddingToCart: allowAddingToCart,
     });
   }
-  // method that listens to button clicks from attributes component
+    // method that listens to button clicks from attributes component
   getAttributeData(val) {
     console.log(val);
     let product;
@@ -81,17 +83,15 @@ class Product extends React.Component {
   amountOfCurrency() {
     let id = this.props.currency.id;
     let amount = this.state.product.prices[id].amount;
-    return amount.toLocaleString("en-US", {
-      style: "currency",
-      currency: this.props.currency.name,
-    });
+    return getFormattedCurrency(this.props.currency.name, amount);
   }
   render() {
+    const sanitizer = DOMPurify.sanitize;
     if (!this.state.fetched) return null;
     return (
-      <div id="CenteringContainer">
-        <div id="ProductContainer">
-          <div id="SidePicturesContainer">
+      <div className="CenteringContainer">
+        <div className="ProductContainer">
+          <div className="SidePicturesContainer">
             {this.state.product.gallery.map((e, id) => (
               <img
                 key={id}
@@ -102,15 +102,15 @@ class Product extends React.Component {
               ></img>
             ))}
           </div>
-          <div id="BigPictureContainer">
+          <div className="BigPictureContainer">
             <img
-              id="BigPicture"
+              className="BigPicture"
               src={this.state.product.gallery[this.state.selectedImageIndex]}
               alt="product"
             ></img>
           </div>
 
-          <div id="InformationContainer">
+          <div className="InformationContainer">
             <h1>{this.state.product.brand}</h1>
             <h2>{this.state.product.name}</h2>
 
@@ -133,7 +133,7 @@ class Product extends React.Component {
             )}
             <p className="PriceQuantity">PRICE:</p>
             {this.state.fetched ? (
-              <p id="Amount">{this.amountOfCurrency()}</p>
+              <p className="Amount">{this.amountOfCurrency()}</p>
             ) : (
               <p></p>
             )}
@@ -147,9 +147,9 @@ class Product extends React.Component {
                 : "PRODUCT IS NOT IN STOCK"}
             </button>
             <div
-              id="DangerouslySetHTML"
+              className="DangerouslySetHTML"
               dangerouslySetInnerHTML={{
-                __html: this.state.product.description,
+                __html: sanitizer(this.state.product.description),
               }}
             />
           </div>

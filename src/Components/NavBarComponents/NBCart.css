@@ -1,4 +1,4 @@
-#NBCartContainer{
+.NBCartMiniContainer{
     text-align: left;
     right: 8%;
     z-index: 100;
@@ -15,7 +15,7 @@
     overflow-y: scroll;
     overflow-x: hidden;
 }
-#MyBag{
+.MyBag{
     font-family: raleway;
     font-weight: 800;
     margin-bottom: 25px;
@@ -23,7 +23,7 @@
 #ItemCount{
     font-weight: 600;
 }
-#TotalContainer{
+.TotalContainer{
     margin-bottom: 48px;
     font-family: roboto;
     font-weight: 500;
@@ -32,24 +32,22 @@
     flex-direction: row;
     justify-content: space-between;
 }
-#TotalContainerAmount{
+.TotalContainerAmount{
     font-family: raleway;
     font-weight: 800;
 }
-#ButtonsContainer{
-    
+.ButtonsContainer{   
     font-size: 14px;
     line-height: 16.8px;
     display: flex;
     flex-direction: row;
     height: 43px;
 }
-#ViewBagLink{
-
+.ViewBagLink{
     flex: 1;
     margin-right: 12px;
 }
-#ViewBagButton{
+.ViewBagButton{
     font-family: raleway;
     font-weight: 700;
     width: 100%;
@@ -58,7 +56,7 @@
     border: 1px solid var(--c-black);
     box-sizing: border-box;
 }
-#CheckOutButton{
+.CheckOutButton{
     font-family: raleway;
     font-weight: 700;
     color: white;

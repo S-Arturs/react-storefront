@@ -68,7 +68,7 @@ class App extends React.Component {
                 sendTint={this.getTint}
               />
             </div>
-            {this.state.isTinted ? <div id="TintContainer"></div> : <div></div>}
+            {this.state.isTinted ? <div className="TintContainer"></div> : <div></div>}
           </div>
           <div>
             <Switch>

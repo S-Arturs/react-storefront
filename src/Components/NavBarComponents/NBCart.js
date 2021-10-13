@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { addToCart } from "../../Actions";
 import NBCartProductCard from "./NBCartProductCard";
 import { Link } from "react-router-dom";
+import { getFormattedCurrency } from '../../Helpers/CurrencyFormatter';
 
 const mapStateToProps = (state) => {
   return {
@@ -77,13 +78,13 @@ class NBCart extends React.Component {
           padding: `${16 * this.props.expanded}px`,
           margin: `${16 * (1 - this.props.expanded)}px`,
         }}
-        id="NBCartContainer"
+        className="NBCartMiniContainer"
       >
         <Expand
           open={this.props.expanded}
           transitions={["opacity", "background"]}
         >
-          <p id="MyBag">
+          <p className="MyBag">
             My bag, <b id="ItemCount">{this.props.cart.length} items</b>
           </p>
           {this.props.cart.map((e, id) => (
@@ -92,30 +93,27 @@ class NBCart extends React.Component {
               refreshParent={this.getRefresh}
               index={id}
               product={e}
-              key={id}
+              key={id + 1000}
             />
           ))}
-          <div id="TotalContainer">
+          <div className="TotalContainer">
             <p>Total</p>{" "}
-            <b id="TotalContainerAmount">
-              {this.state.totalAmount.toLocaleString("en-US", {
-                style: "currency",
-                currency: this.props.currency.name,
-              })}
+            <b className="TotalContainerAmount">
+              {getFormattedCurrency(this.props.currency.name ,this.state.totalAmount)}
             </b>
           </div>
 
           <span>
-            <div id="ButtonsContainer">
-              <Link id="ViewBagLink" to={"/cart"}>
+            <div className="ButtonsContainer">
+              <Link className="ViewBagLink" to={"/cart"}>
                 <button
-                  id="ViewBagButton"
+                  className="ViewBagButton"
                   onClick={() => this.props.sendTint()}
                 >
                   VIEW BAG
                 </button>
               </Link>
-              <button id="CheckOutButton">CHECK OUT</button>
+              <button className="CheckOutButton">CHECK OUT</button>
             </div>
           </span>
         </Expand>

@@ -1,32 +1,23 @@
-html,
-body {
-  
-  /* padding-bottom: 200px; */
-}
-#ShopContainer{
-  /* width: 100%; */
-  text-align: left;
+.ShopContainer{
+    text-align: left;
     display: flex;
     height: 120%;
     flex-flow: column;
 }
-#Window{
-    /* background-color: blue; */
+.Window{
     width: 100%;
     margin-bottom: 150px;
-    /* max-width: 1360px; */
     column-gap: 72px;
     row-gap: 72px;
     display: grid;
 
     grid-template-columns: repeat(3, 24vw);
 }
-#CenteringContainer{
+.CenteringContainer{
   display: flex;
   justify-content: center;
 }
-#CategoryHeader{
-  /* background-color: blue; */
+.CategoryHeader{
   margin-top: 70px;
   margin-bottom: 50px;
   font-family: raleway;

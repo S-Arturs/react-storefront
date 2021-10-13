@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import {setCurrency } from "../../Actions";
 import Expand from "react-expand-animated";
 import { fetchCurrencies } from "../../Api/Fetch";
+import { getSymbol } from "../../Helpers/CurrencyFormatter";
 
 const mapStateToProps = (state) => {
   return {
@@ -35,22 +36,12 @@ class NBCurrencyPicker extends React.Component {
     });
   }
 
-  getSymbol(currencyName) {
-    if (currencyName === "RUB") return "₽";
-    let symbolAndAmount = (0).toLocaleString("en-US", {
-      style: "currency",
-      currency: currencyName,
-    });
-    let extractedSymbol = symbolAndAmount.slice(0, symbolAndAmount.indexOf("0"));
-    return extractedSymbol
-  }
-
   render() {
     if(!this.state.fetched) return null
     return (
-      <div id="CurrencyPicker">
+      <div className="CurrencyPicker">
         <Expand open={this.props.expanded}>
-          <div id="CurrenciesContainer">
+          <div className="CurrenciesContainer">
             {this.state.fetched ? (
               this.state.currencies.map((currencyName, id) => (
                 <button
@@ -65,7 +56,7 @@ class NBCurrencyPicker extends React.Component {
                     this.props.sendCloseCurrency();
                   }}
                 >
-                  {this.getSymbol(currencyName) + " " + currencyName}
+                  {getSymbol(currencyName) + " " + currencyName}
                 </button>
               ))
             ) : (

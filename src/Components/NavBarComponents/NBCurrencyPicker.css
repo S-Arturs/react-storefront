@@ -1,34 +1,36 @@
-#CurrencyPicker {
+.CurrencyPicker {
+    right: 10%;
     position: absolute;
     text-align: left;
     z-index: 102;
-    top: 80px;
+    top: 65px;
     background-color: white;
     box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
 }
-#CurrenciesContainer {
+.CurrenciesContainer {
     display: flex;
     flex-direction: column;
     margin-top: 10px;
     margin-bottom: 10px;
-    margin-left: 16px;
-    margin-right: 16px;  
+    margin-left: 8px;
+    margin-right: 8px;  
 }
 .CurrencyButton {
-    border-radius: 25%, 10%;
+    /* border-radius: 10px; */
     text-align: left;
     font-size: 18px;
     padding-bottom: 10px;
     padding-top: 10px;
+    padding-left: 8px;
+    padding-right: 8px;
     width: 100%;
     font-family: raleway;
     font-weight: 700;
     color: var(--c-black);
     border-width: 0px;
     background: rgba(255, 255, 255, 0);
+    transition: transform 100ms ease-in-out 25ms
 }
 .CurrencyButton:hover {
     transform: scale(1.1);
-    background-color: blue;
-    /* box-shadow: 0px 0px 21px 8px rgba(0,0,0,0.12) */
 }

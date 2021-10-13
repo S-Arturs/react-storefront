@@ -100,7 +100,6 @@ async function performFetch(query) {
   ) {
     queryResult = "error";
   }
-  console.log(queryResult);
   return queryResult;
 }
 

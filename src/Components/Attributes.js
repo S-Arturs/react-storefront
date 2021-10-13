@@ -66,13 +66,7 @@ class Attributes extends React.Component {
   render() {
     return (
       <div>
-        {this.props.origin === "productCard" || this.props.origin === "NBCart" ? (
         <p className="ProductCardAttributeName">{this.props.attribute.name}</p>
-      ) : this.props.origin === "productPage" ? (
-        <p className="ProductPageAttributeName">{this.props.attribute.name}</p>
-      ) : (
-        <div />
-      )}
         {this.setAttributeItems()}
       </div>
     );

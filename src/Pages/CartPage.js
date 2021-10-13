@@ -1,6 +1,6 @@
-import React from 'react';
-import './CartPage.css'
-import { connect} from "react-redux";
+import React from "react";
+import "./CartPage.css";
+import { connect } from "react-redux";
 import NBCartProductCard from "../Components/NavBarComponents/NBCartProductCard";
 import { Link } from "react-router-dom";
 
@@ -14,19 +14,24 @@ class Cart extends React.Component {
   constructor(props) {
     super(props);
     this.getRefresh = this.getRefresh.bind(this);
-    this.state = {}
-    
+    this.state = {};
   }
-  
+
   // force refresh when a children component changes
   getRefresh() {
     this.forceUpdate();
   }
 
-  setProductCards(){
+  setProductCards() {
     return this.props.cart.map((product, index) => (
-      <NBCartProductCard origin={"cart"} refreshParent={this.getRefresh} index={index} product={product} key={index} />
-    ))
+      <NBCartProductCard
+        origin={"cart"}
+        refreshParent={this.getRefresh}
+        index={index}
+        product={product}
+        key={index}
+      />
+    ));
   }
 
   render() {
@@ -34,8 +39,7 @@ class Cart extends React.Component {
       <div className="CartContainer">
         <h1 className="CartTitle">CART</h1>
         {this.setProductCards()}
-            <Link to={'/cart'}>
-            </Link>
+        <Link to={"/cart"}></Link>
       </div>
     );
   }

@@ -80,6 +80,9 @@ h2 {
   background: var(--c-primary);
 }
 
+.AddToCartButton:disabled {
+  opacity: 0.8;
+}
 .AddToCartButton:hover:enabled {
   background: var(--c-primary-darkened)
 

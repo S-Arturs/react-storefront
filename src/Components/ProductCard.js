@@ -49,7 +49,7 @@ class ProductCard extends React.Component {
   }
 
   getAttributeData(val) {
-    // it seems like attributes get messed up when page gets reloaded, 
+    // it seems like attributes get messed up when page gets reloaded,
     // so if that happens, we rewrite the attributes to the correct ones
     let attributes;
     if (
@@ -98,13 +98,21 @@ class ProductCard extends React.Component {
       this.props.addToCart(item);
     }
   }
-  amountOfCurrency(){
-    let id = this.props.currency.id;
-    let amount = this.props.product.prices[id].amount;
-    return getFormattedCurrency(this.props.currency.name, amount)
+
+  incrementHandler() {
+    this.setState({ quantity: this.state.quantity + 1 });
   }
 
-  setAttributes(){
+  decrementHandler() {
+    this.setState({ quantity: this.state.quantity - 1 });
+  }
+  amountOfCurrency() {
+    let id = this.props.currency.id;
+    let amount = this.props.product.prices[id].amount;
+    return getFormattedCurrency(this.props.currency.name, amount);
+  }
+
+  setAttributes() {
     return this.props.product.attributes.map((e, id) => (
       <Attributes
         origin={"productCard"}
@@ -113,7 +121,12 @@ class ProductCard extends React.Component {
         sendAttributeData={this.getAttributeData}
         key={id}
       />
-    ))
+    ));
+  }
+
+  setContainerClassName() {
+    if (this.props.product.inStock) return "CardContainer";
+    return "CardContainer notInStock";
   }
 
   render() {
@@ -123,61 +136,55 @@ class ProductCard extends React.Component {
           this.setState({ expanded: this.props.product.inStock })
         }
         onMouseLeave={() => this.setState({ expanded: false })}
-        style={{ opacity: this.props.product.inStock ? 1 : 0.5 }}
-        className="CardContainer"
+        className={this.setContainerClassName()}
       >
-        <p
-          className="OutOfStock"
-          style={{ opacity: this.props.product.inStock ? 0 : 1 }}
-        >
-          OUT OF STOCK
-        </p>
+        <p className="OutOfStock">OUT OF STOCK</p>
         <Link to={`product/${this.props.product.id}`}>
           <div className="DummyDiv">
-            <img className="Image" src={this.props.product.gallery[0]} alt="product"/>
+            <img
+              className="Image"
+              src={this.props.product.gallery[0]}
+              alt="product"
+            />
           </div>
           <p className="Name">
-            {" "}
             {this.props.product.brand + " " + this.props.product.name}
           </p>
-          <p className="Price">
-            {this.amountOfCurrency()}
-          </p>
+          <p className="Price">{this.amountOfCurrency()}</p>
         </Link>
         {/* using package that lets us smoothly expand components */}
         <div className="ExpandAttributes">
-        <Expand open={this.state.expanded}>
-          <button className="EmptyCartCircle" onClick={() => this.addToCartHandler()}>
-            <img src={EmptyCartIcon} alt="cart"/>
-          </button>
-          {this.setAttributes()}
-          <div className="ProductCardQuantityContainer">
-            <span className="QuantityName"> Quantity </span>
+          <Expand open={this.state.expanded}>
             <button
-              className="ProductCardQuantityContainerButton"
-              disabled={this.state.quantity < 1}
-              onClick={() =>
-                this.setState({ quantity: this.state.quantity - 1 })
-              }
+              className="EmptyCartCircle"
+              onClick={() => this.addToCartHandler()}
             >
-              <img src={Line} alt="line"></img>
+              <img src={EmptyCartIcon} alt="cart" />
             </button>
-            <div>
-              <div className="Quantity">{this.state.quantity}</div>
+            {this.setAttributes()}
+            <div className="ProductCardQuantityContainer">
+              <span className="QuantityName"> Quantity </span>
+              <button
+                className="ProductCardQuantityContainerButton"
+                disabled={this.state.quantity < 1}
+                onClick={() => this.decrementHandler()}
+              >
+                <img src={Line} alt="line"></img>
+              </button>
+              <div>
+                <div className="Quantity">{this.state.quantity}</div>
+              </div>
+              <button
+                className="ProductCardQuantityContainerButton"
+                onClick={() => this.incrementHandler()}
+              >
+                <img src={Crossing} alt="cross"></img>
+              </button>
             </div>
-            <button
-              className="ProductCardQuantityContainerButton"
-              onClick={() =>
-                this.setState({ quantity: this.state.quantity + 1 })
-              }
-            >
-              <img src={Crossing} alt="cross"></img>
-            </button>
-          </div>
-          <Expand open={this.state.check}>
-            <span className="QuantityName">Please select all attributes</span>
+            <Expand open={this.state.check}>
+              <span className="QuantityName">Please select all attributes</span>
+            </Expand>
           </Expand>
-        </Expand>
         </div>
       </div>
     );

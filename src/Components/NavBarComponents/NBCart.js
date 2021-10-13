@@ -80,9 +80,7 @@ class NBCart extends React.Component {
   }
   render() {
     return (
-      <div
-        className={this.setClassName()}
-      >
+      <div className={this.setClassName()}>
         <Expand
           open={this.props.expanded}
           transitions={["opacity", "background"]}
@@ -92,7 +90,7 @@ class NBCart extends React.Component {
           </p>
           {this.setProductCards()}
           <div className="TotalContainer">
-            <p>Total</p>{" "}
+            <p>Total</p>
             <b className="TotalContainerAmount">
               {getFormattedCurrency(this.props.currency.name ,this.state.totalAmount)}
             </b>

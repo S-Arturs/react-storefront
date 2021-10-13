@@ -6,6 +6,7 @@ import { fetchProductPage } from "../Api/Fetch";
 import { addToCart } from "../Actions";
 import { getFormattedCurrency } from "../Helpers/CurrencyFormatter";
 import DOMPurify from "dompurify";
+import Expand from "react-expand-animated";
 
 const mapStateToProps = (state) => {
   return {
@@ -54,7 +55,7 @@ class Product extends React.Component {
       allowAddingToCart: allowAddingToCart,
     });
   }
-    // method that listens to button clicks from attributes component
+  // method that listens to button clicks from attributes component
   getAttributeData(val) {
     console.log(val);
     let product;
@@ -86,7 +87,7 @@ class Product extends React.Component {
     return getFormattedCurrency(this.props.currency.name, amount);
   }
 
-  setAttributes(){
+  setAttributes() {
     return this.state.product.attributes.map((e, id) => (
       <Attributes
         origin={"productPage"}
@@ -96,9 +97,9 @@ class Product extends React.Component {
         sendAttributeData={this.getAttributeData}
         key={id}
       />
-    ))
+    ));
   }
-  setSideImages(){
+  setSideImages() {
     return this.state.product.gallery.map((e, id) => (
       <img
         key={id}
@@ -107,7 +108,11 @@ class Product extends React.Component {
         onClick={() => this.setState({ selectedImageIndex: id })}
         alt="mini product"
       ></img>
-    ))
+    ));
+  }
+  setButtonText(){
+    if(this.state.product.inStock) return "ADD TO CART"
+    return "PRODUCT IS NOT IN STOCK"
   }
   render() {
     const sanitizer = DOMPurify.sanitize;
@@ -116,7 +121,7 @@ class Product extends React.Component {
       <div className="CenteringContainer">
         <div className="ProductContainer">
           <div className="SidePicturesContainer">
-          {this.setSideImages()}
+            {this.setSideImages()}
           </div>
           <div className="BigPictureContainer">
             <img
@@ -130,20 +135,19 @@ class Product extends React.Component {
             <h1>{this.state.product.brand}</h1>
             <h2>{this.state.product.name}</h2>
             {this.setAttributes()}
-            {this.state.check && 
+            <Expand open={this.state.check}>
               <span className="PriceQuantity">
-                Please select all attributes{" "}
-              </span>}
+                Please select all attributes
+              </span>
+            </Expand>
             <p className="PriceQuantity">PRICE:</p>
-            {this.state.fetched && <p className="Amount">{this.amountOfCurrency()}</p>}
+            <p className="Amount">{this.amountOfCurrency()}</p>
             <button
               disabled={!this.state.product.inStock}
               className="AddToCartButton"
               onClick={() => this.addToCartHandler()}
             >
-              {this.state.product.inStock
-                ? "ADD TO CART"
-                : "PRODUCT IS NOT IN STOCK"}
+              {this.setButtonText()}
             </button>
             <div
               className="DangerouslySetHTML"

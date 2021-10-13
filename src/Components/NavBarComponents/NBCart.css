@@ -22,6 +22,7 @@
 .NBCartMiniContainer.Shrunk{
     padding: 0px;
     margin: 16px;
+    margin-top: 8px;
     overflow: hidden;
 }
 .MyBag{

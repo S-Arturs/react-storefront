@@ -114,13 +114,19 @@ class NBCartProductCard extends React.Component {
     return this.props.cart[this.props.index].gallery.length < 2;
   }
 
+  setHR(){
+
+  }
+
   render() {
     // this component also can be called by different parent components, so style depends on the origin
     if (typeof this.props.cart[this.props.index] === "undefined") return null;
     let className = this.props.origin + "Container";
+    let containerClassName = this.props.origin + "ContainerContainer";
+    console.log(containerClassName)
     return (
-      <div style={this.props.origin === "cart" ? { width: "100%" } : {}}>
-        {this.props.origin === "cart" ? <hr /> : <div />}
+      <div className={containerClassName}>
+        <hr/>
         <div className={className}>
           <div className="NamePriceAttributeContainer">
             <div>

@@ -56,6 +56,10 @@ class App extends React.Component {
     });
   }
 
+  setTintedClassName(){
+    if(this.state.isTinted) return "TintContainer"
+    return ""
+  }
   render() {
     if (this.state.categories.length <= 1) return null;
     return (
@@ -69,7 +73,7 @@ class App extends React.Component {
                 sendTint={this.getTint}
               />
             </div>
-            {this.state.isTinted && <div className="TintContainer"></div>}
+            <div className={this.setTintedClassName()}></div>
           </div>
           <div>
             <Switch>

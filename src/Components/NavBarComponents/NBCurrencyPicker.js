@@ -1,7 +1,7 @@
 import React from "react";
 import "./NBCurrencyPicker.css";
 import { connect } from "react-redux";
-import {setCurrency } from "../../Actions";
+import { setCurrency } from "../../Actions";
 import Expand from "react-expand-animated";
 import { fetchCurrencies } from "../../Api/Fetch";
 import { getSymbol } from "../../Helpers/CurrencyFormatter";
@@ -36,36 +36,35 @@ class NBCurrencyPicker extends React.Component {
     });
   }
 
+  setCurrencies() {
+    return this.state.currencies.map((currencyName, id) => (
+      <button
+        className="CurrencyButton"
+        key={id}
+        type="button"
+        onClick={() => {
+          this.props.setCurrency({
+            id: id,
+            name: this.state.currencies[id],
+          });
+          this.props.sendCloseCurrency();
+        }}
+      >
+        {getSymbol(currencyName) + " " + currencyName}
+      </button>
+    ))
+  }
   render() {
-    if(!this.state.fetched) return null
+    if (!this.state.fetched) return null;
     return (
       <div className="CurrencyPicker">
         <Expand open={this.props.expanded}>
           <div className="CurrenciesContainer">
-            {this.state.fetched ? (
-              this.state.currencies.map((currencyName, id) => (
-                <button
-                  className="CurrencyButton"
-                  key={id}
-                  type="button"
-                  onClick={() => {
-                    this.props.setCurrency({
-                      id: id,
-                      name: this.state.currencies[id],
-                    });
-                    this.props.sendCloseCurrency();
-                  }}
-                >
-                  {getSymbol(currencyName) + " " + currencyName}
-                </button>
-              ))
-            ) : (
-              <div></div>
-            )}
+            {this.setCurrencies()}
           </div>
         </Expand>
       </div>
     );
   }
 }
-export default connect(mapStateToProps,mapDispatchToProps)(NBCurrencyPicker);
+export default connect(mapStateToProps, mapDispatchToProps)(NBCurrencyPicker);

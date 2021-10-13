@@ -10,7 +10,7 @@ import NBCurrencyPicker from "./NBCurrencyPicker";
 import NBCart from "./NBCart";
 import { setCategory } from "../../Actions";
 import { getSymbol } from "../../Helpers/CurrencyFormatter";
-import { subscribeAfter } from 'redux-subscribe-action';
+import { subscribeAfter } from "redux-subscribe-action";
 
 const mapStateToProps = (state) => {
   return {
@@ -40,18 +40,16 @@ class NavBar extends React.Component {
       showCurrency: false,
     };
   }
-  
-  componentDidUpdate(){
-    let quantity = this.totalQuantityOfItems()
-    if(this.state.quantity !== quantity){
+
+  componentDidUpdate() {
+    let quantity = this.totalQuantityOfItems();
+    if (this.state.quantity !== quantity) {
       this.setState({
-        quantity: quantity
-      })
+        quantity: quantity,
+      });
     }
   }
-  unsubscribe = subscribeAfter(
-    () => this.forceUpdate()
-  );
+  unsubscribe = subscribeAfter(() => this.forceUpdate());
   getCloseCurrency() {
     this.setState({ showCurrency: false });
   }
@@ -75,7 +73,7 @@ class NavBar extends React.Component {
   }
   handleClickOutsideCurrencyPicker() {
     if (this.state.showCurrency) {
-      this.setState({ showCurrency: false, removedCurrency: true});  
+      this.setState({ showCurrency: false, removedCurrency: true });
     } else {
       this.setState({
         removedCurrency: false,
@@ -88,54 +86,52 @@ class NavBar extends React.Component {
     }
   }
   handleCartButtonClick() {
-    this.setState({showCurrency: false})
+    this.setState({ showCurrency: false });
     if (!this.state.showCart && !this.state.removedCart) {
       this.setState({ showCart: true, removedCart: false });
       this.props.sendTint();
     }
   }
   // style for button with category that's currently selected
-  appropriateStyle(name) {
-    let selectedStyle = {};
-    this.props.category === name
-      ? (selectedStyle = {
-          color: "#5ECE7B",
-          boxShadow: "0px 2px #5ece7b",
-          fontWeight: "800",
-        })
-      : (selectedStyle = {});
-    return selectedStyle;
+  setCategorySelectorClassname(name) {
+    if (this.props.category === name) {
+      return "CategorySelector Selected";
+    }
+    return "CategorySelector";
   }
+
   totalQuantityOfItems() {
     let totalQuantity = 0;
-    this.props.cart.forEach(element => {
-      totalQuantity += element.quantity
+    this.props.cart.forEach((element) => {
+      totalQuantity += element.quantity;
     });
-    return totalQuantity
+    return totalQuantity;
+  }
+  setCategoryButtons() {
+    return this.props.categories.map((category, id) => (
+      <Link key={id} to={`/shop/${this.props.categories[id].name}`}>
+        <button
+          className={this.setCategorySelectorClassname(
+            this.props.categories[id].name
+          )}
+          type="button"
+          onClick={() => this.props.setCategory(category.name)}
+        >
+          {category.name.toUpperCase()}
+        </button>
+      </Link>
+    ));
+  }
+  setArrowClassname() {
+    if (this.state.showCurrency) return "Arrow Flipped";
+    return "Arrow";
   }
   render() {
     if (this.props.categories.length === 0) return null;
     return (
       <div className="NavBar">
-        <div className="CategoriesContainer">
-          {this.props.categories.map((category, id) => {
-            let selectedStyle = this.appropriateStyle(category.name);
-            return (
-              <Link key={id} to={`/shop/${this.props.categories[id].name}`}>
-                <button
-                  style={selectedStyle}
-                  className="CategorySelector"
-                  type="button"
-                  onClick={() => this.props.setCategory(category.name)}
-                >
-                  {category.name.toUpperCase()}
-                </button>
-              </Link>
-            );
-          })}
-        </div>
+        <div className="CategoriesContainer">{this.setCategoryButtons()}</div>
         <div className="LogoContainer">
-          {/* clicling logo brings user to home page */}
           <Link to={`/`}>
             <img className="Logo" src={logo} alt="logo" />
           </Link>
@@ -144,38 +140,37 @@ class NavBar extends React.Component {
           <button
             className="CartButton"
             onClick={() => {
-              this.handleCurrencyPickerButtonClick()
+              this.handleCurrencyPickerButtonClick();
             }}
           >
             {getSymbol(this.props.currency.name)}
-            <img
-              src={Arrow}
-              style={{
-                marginLeft: "10px",
-                transform: `rotate(${180 * this.state.showCurrency + 180}deg)`,
-              }}
-              alt="arrow"
-            />
+            <img src={Arrow} className={this.setArrowClassname()} alt="arrow" />
           </button>
-          <OutsideClickHandler onOutsideClick={() => this.handleClickOutsideCurrencyPicker()}>
-          <NBCurrencyPicker
-            expanded={this.state.showCurrency}
-            sendCloseCurrency={this.getCloseCurrency}
-          />
+          <OutsideClickHandler
+            onOutsideClick={() => this.handleClickOutsideCurrencyPicker()}
+          >
+            <NBCurrencyPicker
+              expanded={this.state.showCurrency}
+              sendCloseCurrency={this.getCloseCurrency}
+            />
           </OutsideClickHandler>
           <button
             className="CartButton"
             onClick={() => this.handleCartButtonClick()}
           >
-            {this.props.cart.length ? (
+            {this.props.cart.length > 0 && (
               <div className="ItemAmountCircle">{this.state.quantity}</div>
-            ) : (
-              <div />
             )}
-            <img src={Cart} style={{ height: "20px" }} alt="cart"></img>
+            <img src={Cart} className="CartSVG" alt="cart"></img>
           </button>
-          <OutsideClickHandler onOutsideClick={() => this.handleClickOutsideCart()}>
-            <NBCart expanded={this.state.showCart} sendTint={this.getTint} refreshParent={this.getRefresh} />
+          <OutsideClickHandler
+            onOutsideClick={() => this.handleClickOutsideCart()}
+          >
+            <NBCart
+              expanded={this.state.showCart}
+              sendTint={this.getTint}
+              refreshParent={this.getRefresh}
+            />
           </OutsideClickHandler>
         </div>
       </div>

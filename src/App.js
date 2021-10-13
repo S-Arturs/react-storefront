@@ -55,6 +55,7 @@ class App extends React.Component {
       isTinted: !this.state.isTinted,
     });
   }
+
   render() {
     if (this.state.categories.length <= 1) return null;
     return (
@@ -68,7 +69,7 @@ class App extends React.Component {
                 sendTint={this.getTint}
               />
             </div>
-            {this.state.isTinted ? <div className="TintContainer"></div> : <div></div>}
+            {this.state.isTinted && <div className="TintContainer"></div>}
           </div>
           <div>
             <Switch>

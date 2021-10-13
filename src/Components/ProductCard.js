@@ -103,6 +103,19 @@ class ProductCard extends React.Component {
     let amount = this.props.product.prices[id].amount;
     return getFormattedCurrency(this.props.currency.name, amount)
   }
+
+  setAttributes(){
+    return this.props.product.attributes.map((e, id) => (
+      <Attributes
+        origin={"productCard"}
+        attribute={e}
+        index={id}
+        sendAttributeData={this.getAttributeData}
+        key={id}
+      />
+    ))
+  }
+
   render() {
     return (
       <div
@@ -137,15 +150,7 @@ class ProductCard extends React.Component {
           <button className="EmptyCartCircle" onClick={() => this.addToCartHandler()}>
             <img src={EmptyCartIcon} alt="cart"/>
           </button>
-          {this.props.product.attributes.map((e, id) => (
-            <Attributes
-              origin={"productCard"}
-              attribute={e}
-              index={id}
-              sendAttributeData={this.getAttributeData}
-              key={id}
-            />
-          ))}
+          {this.setAttributes()}
           <div className="ProductCardQuantityContainer">
             <span className="QuantityName"> Quantity </span>
             <button

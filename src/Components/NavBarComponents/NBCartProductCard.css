@@ -94,6 +94,15 @@
 .SVGLine{
     position: absolute;
 }
+.SVGLine.Right{
+    transform: rotate(45deg);
+}
+.SVGLine.Left{
+    transform: rotate(135deg);
+}
+.SVGLine.Upright{
+    transform: rotate(90deg);
+}
 .DecrementRemoveButton{
     display: flex;
     flex-direction: row;
@@ -104,6 +113,14 @@
     overflow: hidden;
     width: 141px;
     height: 185px;
+}
+.NamePriceAttributeSubContainer{
+    display: flex;
+    flex-direction: row;
+}
+.ImageContainerForCart button:disabled{
+    height: 0px;
+    opacity: 0;
 }
 hr{
     border-top: 1px solid #E5E5E5;
@@ -120,8 +137,17 @@ hr{
     /* z-index: 1; */
     right: 0%;
     position: absolute;
-
 }
+
+.NextButton img{
+    transform: rotate(90deg);
+    position: relative;
+    /* top: 50%; */
+    height: 12px; 
+    fill: white; 
+    filter: invert(100%) sepia(0%) saturate(7470%) hue-rotate(116deg) brightness(109%) contrast(109%);
+}
+
 .PreviousButton{ 
     text-align: left;
     height: 100%;
@@ -132,14 +158,14 @@ hr{
     left: 0%;
     position: absolute;
 }
-.SVGArrow{
+.PreviousButton img{
+    transform: rotate(-90deg);
     position: relative;
     /* top: 50%; */
     height: 12px; 
     fill: white; 
     filter: invert(100%) sepia(0%) saturate(7470%) hue-rotate(116deg) brightness(109%) contrast(109%);
 }
-
 .cartContainer{
     display: flex;
     flex-direction: row;
@@ -164,37 +190,49 @@ hr{
     font-size: 24px;
 }
 
-.cartContainer div .QuantityContainer {
+.cartContainer div .QuantityContainerNB {
     width: initial;
     height: 100%;
     margin-right: 12px;
 }
 
-.cartContainer div .QuantityContainer .UniversalButton {
+.cartContainer div .QuantityContainerNB .UniversalButton {
     width: 45px;
     height: 45px;
 }
 
-.cartContainer div .QuantityContainer .UniversalButton .SVGLine{
+.cartContainer div .QuantityContainerNB .DecrementButton {
+    width: 45px;
+    height: 45px;
+}
+
+.cartContainer div .QuantityContainerNB .UniversalButton .SVGLine{
     width: 15px;
 }
 
-.cartContainer div .QuantityContainer .QuantityNumberContainer {
+.cartContainer div .QuantityContainerNB .QuantityNumberContainer {
     font-size: 24px;
 }
 
-.cartContainer div .QuantityContainer .DecrementRemoveButton {
+.cartContainer div .QuantityContainerNB .DecrementRemoveButton {
     height: 45px;
 }
 
-.cartContainer div .QuantityContainer .DecrementRemoveButton #DecrementButton {
+.cartContainer div .QuantityContainerNB .DecrementRemoveButton .DecrementButton {
     width: 45px;
     height: 45px;
 }
 
-.cartContainer div .QuantityContainer .RemoveItem {
+.cartContainer div .QuantityContainerNB .RemoveItem {
     /* z-index: 1; */
     width: 45px;
     height: 45px;
     left: -64px;
+}
+
+.cartContainer div .QuantityContainerNB .RemoveItem .SVGLine{
+    /* z-index: 1; */
+    width: 15px;
+    height: 15px;
+    /* left: -64px; */
 }

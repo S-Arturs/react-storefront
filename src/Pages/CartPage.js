@@ -23,13 +23,17 @@ class Cart extends React.Component {
     this.forceUpdate();
   }
 
+  setProductCards(){
+    return this.props.cart.map((product, index) => (
+      <NBCartProductCard origin={"cart"} refreshParent={this.getRefresh} index={index} product={product} key={index} />
+    ))
+  }
+
   render() {
     return (
       <div className="CartContainer">
         <h1 className="CartTitle">CART</h1>
-          {this.props.cart.map((product, index) => (
-              <NBCartProductCard origin={"cart"} refreshParent={this.getRefresh} index={index} product={product} key={index} />
-            ))}
+        {this.setProductCards()}
             <Link to={'/cart'}>
             </Link>
       </div>

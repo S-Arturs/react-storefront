@@ -20,54 +20,60 @@ class Attributes extends React.Component {
       });
     }
   }
+
+  setAttributeItems(){
+    return this.props.attribute.items.map((choice, index) => {
+      let background = "#ffffff";
+      let buttonText = choice.value;
+      let opacity = 0.5;
+      let color = "Black";
+      // swatch attributes have different style requirements
+      if (this.props.attribute.type === "swatch") {
+        background = choice.value;
+        buttonText = " ";
+        if (index === this.state.activeAttributeIndex) opacity = 1;
+      } else {
+        if (index === this.state.activeAttributeIndex) {
+          background = "#1D1F22";
+          opacity = 1;
+          color = "white";
+        }
+      }
+      return (
+        <button
+          key={index}
+          className={
+            this.props.origin === "cart" ||
+            this.props.origin === "productPage"
+              ? "AttributesButtons"
+              : "MiniAttributesButtons"
+          }
+          style={{
+            backgroundColor: `${background}`,
+            opacity: `${opacity}`,
+            color: `${color}`,
+          }}
+          type="button"
+          onClick={() => this.clickHandler(index)}
+        >
+          {buttonText}
+        </button>
+      );
+    })
+
+  }
+
   render() {
     return (
       <div>
         {this.props.origin === "productCard" || this.props.origin === "NBCart" ? (
-          <p className="ProductCardAttributeName">{this.props.attribute.name}</p>
-        ) : this.props.origin === "productPage" ? (
-          <p className="ProductPageAttributeName">{this.props.attribute.name}</p>
-        ) : (
-          <div />
-        )}
-        {this.props.attribute.items.map((choice, index) => {
-          let background = "#ffffff";
-          let buttonText = choice.value;
-          let opacity = 0.5;
-          let color = "Black";
-          // swatch attributes have different style requirements
-          if (this.props.attribute.type === "swatch") {
-            background = choice.value;
-            buttonText = " ";
-            if (index === this.state.activeAttributeIndex) opacity = 1;
-          } else {
-            if (index === this.state.activeAttributeIndex) {
-              background = "#1D1F22";
-              opacity = 1;
-              color = "white";
-            }
-          }
-          return (
-            <button
-              key={index}
-              className={
-                this.props.origin === "cart" ||
-                this.props.origin === "productPage"
-                  ? "AttributesButtons"
-                  : "MiniAttributesButtons"
-              }
-              style={{
-                backgroundColor: `${background}`,
-                opacity: `${opacity}`,
-                color: `${color}`,
-              }}
-              type="button"
-              onClick={() => this.clickHandler(index)}
-            >
-              {buttonText}
-            </button>
-          );
-        })}
+        <p className="ProductCardAttributeName">{this.props.attribute.name}</p>
+      ) : this.props.origin === "productPage" ? (
+        <p className="ProductPageAttributeName">{this.props.attribute.name}</p>
+      ) : (
+        <div />
+      )}
+        {this.setAttributeItems()}
       </div>
     );
   }

@@ -85,6 +85,30 @@ class Product extends React.Component {
     let amount = this.state.product.prices[id].amount;
     return getFormattedCurrency(this.props.currency.name, amount);
   }
+
+  setAttributes(){
+    return this.state.product.attributes.map((e, id) => (
+      <Attributes
+        origin={"productPage"}
+        attribute={e}
+        productId={0}
+        index={id}
+        sendAttributeData={this.getAttributeData}
+        key={id}
+      />
+    ))
+  }
+  setSideImages(){
+    return this.state.product.gallery.map((e, id) => (
+      <img
+        key={id}
+        className="SidePictures"
+        src={e}
+        onClick={() => this.setState({ selectedImageIndex: id })}
+        alt="mini product"
+      ></img>
+    ))
+  }
   render() {
     const sanitizer = DOMPurify.sanitize;
     if (!this.state.fetched) return null;
@@ -92,15 +116,7 @@ class Product extends React.Component {
       <div className="CenteringContainer">
         <div className="ProductContainer">
           <div className="SidePicturesContainer">
-            {this.state.product.gallery.map((e, id) => (
-              <img
-                key={id}
-                className="SidePictures"
-                src={e}
-                onClick={() => this.setState({ selectedImageIndex: id })}
-                alt="mini product"
-              ></img>
-            ))}
+          {this.setSideImages()}
           </div>
           <div className="BigPictureContainer">
             <img
@@ -113,30 +129,13 @@ class Product extends React.Component {
           <div className="InformationContainer">
             <h1>{this.state.product.brand}</h1>
             <h2>{this.state.product.name}</h2>
-
-            {this.state.product.attributes.map((e, id) => (
-              <Attributes
-                origin={"productPage"}
-                attribute={e}
-                productId={0}
-                index={id}
-                sendAttributeData={this.getAttributeData}
-                key={id}
-              />
-            ))}
-            {this.state.check ? (
+            {this.setAttributes()}
+            {this.state.check && 
               <span className="PriceQuantity">
                 Please select all attributes{" "}
-              </span>
-            ) : (
-              <span></span>
-            )}
+              </span>}
             <p className="PriceQuantity">PRICE:</p>
-            {this.state.fetched ? (
-              <p className="Amount">{this.amountOfCurrency()}</p>
-            ) : (
-              <p></p>
-            )}
+            {this.state.fetched && <p className="Amount">{this.amountOfCurrency()}</p>}
             <button
               disabled={!this.state.product.inStock}
               className="AddToCartButton"

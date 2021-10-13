@@ -61,41 +61,36 @@ class NBCart extends React.Component {
       });
     }
   }
+
+  setProductCards(){
+    return this.props.cart.map((e, id) => (
+      <NBCartProductCard
+        origin={"NBCart"}
+        refreshParent={this.getRefresh}
+        index={id}
+        product={e}
+        key={id}
+      />
+    ))
+  }
+
+  setClassName(){
+    if(this.props.expanded) return "NBCartMiniContainer"
+    return "NBCartMiniContainer Shrunk"
+  }
   render() {
-    // add scroll wheel only if the contents don't fit
-    let hideScrollWheel = "initial";
-    if (this.props.expanded) {
-      hideScrollWheel = "auto";
-    } else {
-      hideScrollWheel = "hidden";
-    }
     return (
       <div
-        style={{
-          // changing padding to margin so that we don't have 
-          // a white restangle floating around when cart is not expanded
-          overflow: `${hideScrollWheel}`,
-          padding: `${16 * this.props.expanded}px`,
-          margin: `${16 * (1 - this.props.expanded)}px`,
-        }}
-        className="NBCartMiniContainer"
+        className={this.setClassName()}
       >
         <Expand
           open={this.props.expanded}
           transitions={["opacity", "background"]}
         >
           <p className="MyBag">
-            My bag, <b id="ItemCount">{this.props.cart.length} items</b>
+            My bag, <b className="ItemCount">{this.props.cart.length} items</b>
           </p>
-          {this.props.cart.map((e, id) => (
-            <NBCartProductCard
-              origin={"NBCart"}
-              refreshParent={this.getRefresh}
-              index={id}
-              product={e}
-              key={id + 1000}
-            />
-          ))}
+          {this.setProductCards()}
           <div className="TotalContainer">
             <p>Total</p>{" "}
             <b className="TotalContainerAmount">

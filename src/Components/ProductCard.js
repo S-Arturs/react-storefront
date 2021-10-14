@@ -77,8 +77,8 @@ class ProductCard extends React.Component {
 
   addToCartHandler() {
     // adding product to redux state
-    const{product, addToCart}=this.props
-    const{attributes, quantity}=this.state
+    const { product, addToCart } = this.props;
+    const { attributes, quantity } = this.state;
     let allowAddingToCart = true;
     attributes.forEach((attribute) => {
       if (attribute.selectedvalue === -1) {
@@ -86,7 +86,7 @@ class ProductCard extends React.Component {
         this.setState({ check: true });
       }
     });
-    if(quantity < 1) allowAddingToCart = false;
+    if (quantity < 1) allowAddingToCart = false;
     if (allowAddingToCart) {
       let item = {
         id: product.id,
@@ -109,7 +109,7 @@ class ProductCard extends React.Component {
     this.setState({ quantity: this.state.quantity - 1 });
   }
   amountOfCurrency() {
-    const{product, currency}=this.props
+    const { product, currency } = this.props;
     let id = currency.id;
     let amount = product.prices[id].amount;
     return getFormattedCurrency(currency.name, amount);
@@ -138,11 +138,50 @@ class ProductCard extends React.Component {
     return "CardContainer notInStock";
   }
 
+  renderExpandablePart = () => {
+    const { expanded, quantity, check } = this.state;
+    //using package that lets smoothly expand elements
+    return (
+      <Expand open={expanded}>
+        <button
+          className="EmptyCartCircle"
+          onClick={() => this.addToCartHandler()}
+        >
+          <img src={EmptyCartIcon} alt="cart" />
+        </button>
+        {this.setAttributes()}
+        <div className="ProductCardQuantityContainer">
+          <span className="QuantityName"> Quantity </span>
+          <div>
+            <button
+              className="ProductCardQuantityContainerButton"
+              disabled={quantity < 2}
+              onClick={() => this.decrementHandler()}
+            >
+              <img src={Line} alt="line"></img>
+            </button>
+            <div>
+              <div className="Quantity">{quantity}</div>
+            </div>
+            <button
+              className="ProductCardQuantityContainerButton"
+              onClick={() => this.incrementHandler()}
+            >
+              <img src={Crossing} alt="cross"></img>
+            </button>
+          </div>
+        </div>
+        <Expand open={check}>
+          <span className="QuantityName">Please select all attributes</span>
+        </Expand>
+      </Expand>
+    );
+  };
+
   render() {
     const {
       product: { id, gallery, brand, name },
     } = this.props;
-    const { expanded, quantity, check } = this.state;
     return (
       <div
         onMouseEnter={() => this.onMouseEnterHandler()}
@@ -157,41 +196,8 @@ class ProductCard extends React.Component {
           <p className="Name">{brand + " " + name}</p>
           <p className="Price">{this.amountOfCurrency()}</p>
         </Link>
-        {/* using package that lets us smoothly expand components */}
         <div className="ExpandAttributes">
-          <Expand open={expanded}>
-            <button
-              className="EmptyCartCircle"
-              onClick={() => this.addToCartHandler()}
-            >
-              <img src={EmptyCartIcon} alt="cart" />
-            </button>
-            {this.setAttributes()}
-            <div className="ProductCardQuantityContainer">
-              <span className="QuantityName"> Quantity </span>
-              <div>
-                <button
-                  className="ProductCardQuantityContainerButton"
-                  disabled={quantity < 2}
-                  onClick={() => this.decrementHandler()}
-                >
-                  <img src={Line} alt="line"></img>
-                </button>
-                <div>
-                  <div className="Quantity">{quantity}</div>
-                </div>
-                <button
-                  className="ProductCardQuantityContainerButton"
-                  onClick={() => this.incrementHandler()}
-                >
-                  <img src={Crossing} alt="cross"></img>
-                </button>
-              </div>
-            </div>
-            <Expand open={check}>
-              <span className="QuantityName">Please select all attributes</span>
-            </Expand>
-          </Expand>
+          {this.renderExpandablePart()}
         </div>
       </div>
     );

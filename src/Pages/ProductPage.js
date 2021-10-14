@@ -73,7 +73,7 @@ class Product extends React.Component {
     }
   }
   addToCartHandler() {
-    const {allowAddingToCart, product} = this.state
+    const { allowAddingToCart, product } = this.state;
     if (allowAddingToCart && product.inStock) {
       this.props.addToCart(product);
     } else {
@@ -114,14 +114,48 @@ class Product extends React.Component {
     if (this.state.product.inStock) return "ADD TO CART";
     return "PRODUCT IS NOT IN STOCK";
   }
-  render() {
+
+  renderInformationPart = () => {
     const {
-      fetched,
-      product: { gallery, brand, name, inStock, description },
-      selectedImageIndex,
+      product: { brand, name, inStock, description },
       check,
     } = this.state;
     const sanitizer = DOMPurify.sanitize;
+    //using package that lets smoothly expand elements
+    return (
+      <div className="InformationContainer">
+        <h1>{brand}</h1>
+        <h2>{name}</h2>
+        {this.setAttributes()}
+        <Expand open={check}>
+          <span className="PriceQuantity">Please select all attributes</span>
+        </Expand>
+        <p className="PriceQuantity">PRICE:</p>
+        <p className="Amount">{this.amountOfCurrency()}</p>
+        <button
+          disabled={!inStock}
+          className="AddToCartButton"
+          onClick={() => this.addToCartHandler()}
+        >
+          {this.setButtonText()}
+        </button>
+        <div
+          className="DangerouslySetHTML"
+          dangerouslySetInnerHTML={{
+            __html: sanitizer(description),
+          }}
+        />
+      </div>
+    );
+  };
+  
+  render() {
+    const {
+      fetched,
+      product: { gallery },
+      selectedImageIndex,
+      check,
+    } = this.state;
     if (!fetched) return null;
     return (
       <div className="CenteringContainer">
@@ -134,32 +168,7 @@ class Product extends React.Component {
               alt="product"
             ></img>
           </div>
-
-          <div className="InformationContainer">
-            <h1>{brand}</h1>
-            <h2>{name}</h2>
-            {this.setAttributes()}
-            <Expand open={check}>
-              <span className="PriceQuantity">
-                Please select all attributes
-              </span>
-            </Expand>
-            <p className="PriceQuantity">PRICE:</p>
-            <p className="Amount">{this.amountOfCurrency()}</p>
-            <button
-              disabled={!inStock}
-              className="AddToCartButton"
-              onClick={() => this.addToCartHandler()}
-            >
-              {this.setButtonText()}
-            </button>
-            <div
-              className="DangerouslySetHTML"
-              dangerouslySetInnerHTML={{
-                __html: sanitizer(description),
-              }}
-            />
-          </div>
+          {this.renderInformationPart()}
         </div>
       </div>
     );

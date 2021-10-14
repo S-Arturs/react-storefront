@@ -125,6 +125,34 @@ class NBCartProductCard extends React.Component {
     return this.props.origin + "ContainerContainer";
   }
 
+  renderQuantityButtons = () => {
+    const { cart, index } = this.props;
+    return (
+      <div className="QuantityContainerNB">
+        <button
+          className="UniversalButton"
+          onClick={() => this.incrementQuantity()}
+        >
+          <img className="SVGLine Upright" src={Line} alt="line" />
+          <img className="SVGLine" src={Line} alt="line" />
+        </button>
+        <div className="QuantityNumberContainer">{cart[index].quantity}</div>
+        <div className="DecrementRemoveButton">
+          <button
+            className="DecrementButton"
+            onClick={() => this.decrementQuantity()}
+          >
+            <img className="SVGLine" src={Line} alt="line" />
+          </button>
+          <button className="RemoveItem" onClick={() => this.removeItem()}>
+            <img className="SVGLine Left" src={Line} alt="line" />
+            <img className="SVGLine Right" src={Line} alt="line" />
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   render() {
     // this component also can be called by different parent components, so style depends on the origin
     const { cart, index } = this.props;
@@ -143,33 +171,9 @@ class NBCartProductCard extends React.Component {
             <div>{this.setAttributes()}</div>
           </div>
           <div className="NamePriceAttributeSubContainer">
-            <div className="QuantityContainerNB">
-              <button
-                className="UniversalButton"
-                onClick={() => this.incrementQuantity()}
-              >
-                <img className="SVGLine Upright" src={Line} alt="line" />
-                <img className="SVGLine" src={Line} alt="line" />
-              </button>
-              <div className="QuantityNumberContainer">
-                {cart[index].quantity}
-              </div>
-              <div className="DecrementRemoveButton">
-                <button
-                  className="DecrementButton"
-                  onClick={() => this.decrementQuantity()}
-                >
-                  <img className="SVGLine" src={Line} alt="line" />
-                </button>
-                <button
-                  className="RemoveItem"
-                  onClick={() => this.removeItem()}
-                >
-                  <img className="SVGLine Left" src={Line} alt="line" />
-                  <img className="SVGLine Right" src={Line} alt="line" />
-                </button>
-              </div>
-            </div>
+
+            {this.renderQuantityButtons}
+            
             <div className="ImageContainerForCart">
               <button
                 className="PreviousButton"

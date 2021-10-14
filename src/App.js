@@ -41,14 +41,14 @@ class App extends React.Component {
     const queryResult = await fetchCategories();
     if (queryResult !== "error") {
       categories = JSON.parse(JSON.stringify(queryResult.categories));
-      categories.unshift({name: "all"})
+      categories.unshift({ name: "all" });
       this.setState({
         categories: categories,
         isCartFocused: false,
       });
     }
   }
-  // a method that can be called from children 
+  // a method that can be called from children
   // components to remove tint when shopping cart is in focus
   getTint() {
     this.setState({
@@ -56,12 +56,34 @@ class App extends React.Component {
     });
   }
 
-  setTintedClassName(){
-    if(this.state.isTinted) return "TintContainer"
-    return ""
+  setTintedClassName() {
+    if (this.state.isTinted) return "TintContainer";
+    return "";
   }
+
+  renderPages = () => {
+    return (
+      <div>
+        <Switch>
+          <Redirect exact from="/" to={`/shop/all`} />
+          <Route
+            exact
+            path="/shop/:category?"
+            render={(props) => <HomePage {...props} />}
+          />
+          <Route
+            path="/shop/product/:id"
+            render={(props) => <ProductPage {...props} />}
+          />
+          <Route exact path="/cart">
+            <CartPage />
+          </Route>
+        </Switch>
+      </div>
+    );
+  };
   render() {
-    const {categories} = this.state
+    const { categories } = this.state;
     if (categories.length <= 1) return null;
     return (
       <Router>
@@ -75,27 +97,7 @@ class App extends React.Component {
               />
             </div>
             <div className={this.setTintedClassName()}></div>
-          </div>
-          <div>
-            <Switch>
-              <Redirect
-                exact
-                from="/"
-                to={`/shop/all`}
-              />
-              <Route
-                exact
-                path="/shop/:category?"
-                render={(props) => <HomePage {...props} />}
-              />
-              <Route
-                path="/shop/product/:id"
-                render={(props) => <ProductPage {...props} />}
-              />
-              <Route exact path="/cart">
-                <CartPage />
-              </Route>
-            </Switch>
+            {this.renderPages()}
           </div>
         </div>
       </Router>

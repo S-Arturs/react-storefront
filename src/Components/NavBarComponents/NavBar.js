@@ -158,6 +158,7 @@ class NavBar extends React.Component {
               expanded={showCurrency}
               sendCloseCurrency={this.getCloseCurrency}
             />
+            
           </OutsideClickHandler>
           <button
             className="CartButton"
@@ -168,6 +169,7 @@ class NavBar extends React.Component {
             </div>
             <img src={Cart} className="CartSVG" alt="cart"></img>
           </button>
+
           <OutsideClickHandler
             onOutsideClick={() => this.handleClickOutsideCart()}
           >

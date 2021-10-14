@@ -95,14 +95,15 @@ class NBCart extends React.Component {
               My bag,{" "}
               <b className="ItemCount">{this.state.totalQuantity} items</b>
             </p>
+
             {this.setProductCards()}
+            
             <div className="TotalContainer">
               <p>Total</p>
               <b className="TotalContainerAmount">
                 {this.setFormattedCurrency()}
               </b>
             </div>
-
             <span>
               <div className="ButtonsContainer">
                 <Link className="ViewBagLink" to={"/cart"}>

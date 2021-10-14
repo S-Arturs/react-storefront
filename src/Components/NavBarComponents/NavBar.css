@@ -14,6 +14,7 @@ button:not([disabled]) {
   width: 82%;
 }
 .CategorySelector {
+  transition: transform 100ms ease-in-out 25ms;
   padding-right: 16px;
   padding-left: 16px;
   position: relative;
@@ -28,13 +29,15 @@ button:not([disabled]) {
 }
 .Arrow{
   margin-left: 10px;
-  transform: rotate(180deg);
+  transition: transform 400ms ease-in-out 25ms;
+  transform: rotateZ(180deg)
 }
 .Arrow.Flipped{
-  transform: rotate(0deg);
+  transform: rotateZ(0deg)
 }
   /* transform: `rotate(${180 * this.state.showCurrency + 180}deg)`, */
 .CategorySelector.Selected {
+
   color: #5ECE7B;
   box-shadow: 0px 2px #5ece7b;
   font-weight: 800;
@@ -43,6 +46,7 @@ button:not([disabled]) {
   transform: scale(1.1);
 }
 .Logo {
+  transition: transform 100ms ease-in-out 25ms;
   height: 100%;
 }
 .Logo:hover {
@@ -94,6 +98,14 @@ button:not([disabled]) {
   color: white;
   background-color: var(--c-black);
   height: 20px;
-  width: 20px;
-  border-radius: 50%;
+  min-width: 20px;
+  border-radius: 10px;
+}
+.ItemAmountCircle.Hidden {
+  display: none;
+}
+.ItemAmountCircle p {
+  text-align: center;
+  padding-left: 5px;
+  padding-right: 5px;
 }

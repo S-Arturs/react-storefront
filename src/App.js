@@ -49,7 +49,7 @@ class App extends React.Component {
     }
   }
   // a method that can be called from children 
-  // components to remove tint when shopping cart is in focuse
+  // components to remove tint when shopping cart is in focus
   getTint() {
     this.setState({
       isTinted: !this.state.isTinted,
@@ -61,7 +61,8 @@ class App extends React.Component {
     return ""
   }
   render() {
-    if (this.state.categories.length <= 1) return null;
+    const {categories} = this.state
+    if (categories.length <= 1) return null;
     return (
       <Router>
         <div className="App">
@@ -69,7 +70,7 @@ class App extends React.Component {
             <div className="App-Header">
               <NavBar
                 id="NavBar"
-                categories={this.state.categories}
+                categories={categories}
                 sendTint={this.getTint}
               />
             </div>

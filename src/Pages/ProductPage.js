@@ -7,6 +7,7 @@ import { addToCart } from "../Actions";
 import { getFormattedCurrency } from "../Helpers/CurrencyFormatter";
 import DOMPurify from "dompurify";
 import Expand from "react-expand-animated";
+import uuid from "react-uuid";
 
 const mapStateToProps = (state) => {
   return {
@@ -26,7 +27,6 @@ class Product extends React.Component {
     this.getAttributeData = this.getAttributeData.bind(this);
     this.state = {
       check: false,
-      id: this.props.match.params.id,
       fetched: false,
       selectedImageIndex: 0,
       allowAddingToCart: false,
@@ -57,7 +57,6 @@ class Product extends React.Component {
   }
   // method that listens to button clicks from attributes component
   getAttributeData(val) {
-    console.log(val);
     let product;
     let allSelected = true;
     // deep cloning
@@ -74,8 +73,9 @@ class Product extends React.Component {
     }
   }
   addToCartHandler() {
-    if (this.state.allowAddingToCart && this.state.product.inStock) {
-      this.props.addToCart(this.state.product);
+    const {allowAddingToCart, product} = this.state
+    if (allowAddingToCart && product.inStock) {
+      this.props.addToCart(product);
     } else {
       this.setState({ check: true });
     }
@@ -95,14 +95,14 @@ class Product extends React.Component {
         productId={0}
         index={id}
         sendAttributeData={this.getAttributeData}
-        key={id}
+        key={uuid()}
       />
     ));
   }
   setSideImages() {
     return this.state.product.gallery.map((e, id) => (
       <img
-        key={id}
+        key={uuid()}
         className="SidePictures"
         src={e}
         onClick={() => this.setState({ selectedImageIndex: id })}
@@ -110,32 +110,36 @@ class Product extends React.Component {
       ></img>
     ));
   }
-  setButtonText(){
-    if(this.state.product.inStock) return "ADD TO CART"
-    return "PRODUCT IS NOT IN STOCK"
+  setButtonText() {
+    if (this.state.product.inStock) return "ADD TO CART";
+    return "PRODUCT IS NOT IN STOCK";
   }
   render() {
+    const {
+      fetched,
+      product: { gallery, brand, name, inStock, description },
+      selectedImageIndex,
+      check,
+    } = this.state;
     const sanitizer = DOMPurify.sanitize;
-    if (!this.state.fetched) return null;
+    if (!fetched) return null;
     return (
       <div className="CenteringContainer">
         <div className="ProductContainer">
-          <div className="SidePicturesContainer">
-            {this.setSideImages()}
-          </div>
+          <div className="SidePicturesContainer">{this.setSideImages()}</div>
           <div className="BigPictureContainer">
             <img
               className="BigPicture"
-              src={this.state.product.gallery[this.state.selectedImageIndex]}
+              src={gallery[selectedImageIndex]}
               alt="product"
             ></img>
           </div>
 
           <div className="InformationContainer">
-            <h1>{this.state.product.brand}</h1>
-            <h2>{this.state.product.name}</h2>
+            <h1>{brand}</h1>
+            <h2>{name}</h2>
             {this.setAttributes()}
-            <Expand open={this.state.check}>
+            <Expand open={check}>
               <span className="PriceQuantity">
                 Please select all attributes
               </span>
@@ -143,7 +147,7 @@ class Product extends React.Component {
             <p className="PriceQuantity">PRICE:</p>
             <p className="Amount">{this.amountOfCurrency()}</p>
             <button
-              disabled={!this.state.product.inStock}
+              disabled={!inStock}
               className="AddToCartButton"
               onClick={() => this.addToCartHandler()}
             >
@@ -152,7 +156,7 @@ class Product extends React.Component {
             <div
               className="DangerouslySetHTML"
               dangerouslySetInnerHTML={{
-                __html: sanitizer(this.state.product.description),
+                __html: sanitizer(description),
               }}
             />
           </div>

@@ -51,51 +51,53 @@ class ProductCard extends React.Component {
   getAttributeData(val) {
     // it seems like attributes get messed up when page gets reloaded,
     // so if that happens, we rewrite the attributes to the correct ones
-    let attributes;
+    const { attributes } = this.state;
+    const { product } = this.props;
+    let newAttributes;
     if (
-      typeof this.state.attributes[val[0]] == "undefined" ||
-      this.state.attributes[val[0]].name !==
-        this.props.product.attributes[val[0]].name ||
-      this.state.attributes.length !== this.props.product.attributes.length
+      typeof attributes[val[0]] == "undefined" ||
+      attributes[val[0]].name !== product.attributes[val[0]].name ||
+      attributes.length !== product.attributes.length
     ) {
-      attributes = this.props.product.attributes;
-      attributes = attributes.map((attribute, index) => ({
+      newAttributes = product.attributes;
+      newAttributes = newAttributes.map((attribute, index) => ({
         ...attribute,
         selectedvalue:
-          typeof this.state.attributes[index] == "undefined"
+          typeof attributes[index] == "undefined"
             ? -1
-            : this.state.attributes[index].selectedvalue,
+            : attributes[index].selectedvalue,
       }));
-      attributes[val[0]].selectedvalue = val[1];
+      newAttributes[val[0]].selectedvalue = val[1];
     } else {
-      attributes = this.state.attributes;
-      attributes[val[0]].selectedvalue = val[1];
+      newAttributes = attributes;
+      newAttributes[val[0]].selectedvalue = val[1];
     }
-    attributes = JSON.parse(JSON.stringify(this.state.attributes));
-    attributes[val[0]].selectedvalue = val[1];
-    this.setState({ attributes: attributes });
+    this.setState({ attributes: newAttributes });
   }
 
   addToCartHandler() {
     // adding product to redux state
+    const{product, addToCart}=this.props
+    const{attributes, quantity}=this.state
     let allowAddingToCart = true;
-    this.state.attributes.forEach((attribute) => {
+    attributes.forEach((attribute) => {
       if (attribute.selectedvalue === -1) {
         allowAddingToCart = false;
         this.setState({ check: true });
       }
     });
+    if(quantity < 1) allowAddingToCart = false;
     if (allowAddingToCart) {
       let item = {
-        id: this.props.product.id,
-        gallery: this.props.product.gallery,
-        brand: this.props.product.brand,
-        attributes: this.state.attributes,
-        quantity: this.state.quantity,
-        name: this.props.product.name,
-        prices: this.props.product.prices,
+        id: product.id,
+        gallery: product.gallery,
+        brand: product.brand,
+        attributes: attributes,
+        quantity: quantity,
+        name: product.name,
+        prices: product.prices,
       };
-      this.props.addToCart(item);
+      addToCart(item);
     }
   }
 
@@ -107,11 +109,18 @@ class ProductCard extends React.Component {
     this.setState({ quantity: this.state.quantity - 1 });
   }
   amountOfCurrency() {
-    let id = this.props.currency.id;
-    let amount = this.props.product.prices[id].amount;
-    return getFormattedCurrency(this.props.currency.name, amount);
+    const{product, currency}=this.props
+    let id = currency.id;
+    let amount = product.prices[id].amount;
+    return getFormattedCurrency(currency.name, amount);
   }
 
+  onMouseEnterHandler() {
+    this.setState({ expanded: this.props.product.inStock });
+  }
+  onMouseLeaveHandler() {
+    this.setState({ expanded: false });
+  }
   setAttributes() {
     return this.props.product.attributes.map((e, id) => (
       <Attributes
@@ -130,31 +139,27 @@ class ProductCard extends React.Component {
   }
 
   render() {
+    const {
+      product: { id, gallery, brand, name },
+    } = this.props;
+    const { expanded, quantity, check } = this.state;
     return (
       <div
-        onMouseEnter={() =>
-          this.setState({ expanded: this.props.product.inStock })
-        }
-        onMouseLeave={() => this.setState({ expanded: false })}
+        onMouseEnter={() => this.onMouseEnterHandler()}
+        onMouseLeave={() => this.onMouseLeaveHandler()}
         className={this.setContainerClassName()}
       >
         <p className="OutOfStock">OUT OF STOCK</p>
-        <Link to={`product/${this.props.product.id}`}>
+        <Link to={`product/${id}`}>
           <div className="DummyDiv">
-            <img
-              className="Image"
-              src={this.props.product.gallery[0]}
-              alt="product"
-            />
+            <img className="Image" src={gallery[0]} alt="product" />
           </div>
-          <p className="Name">
-            {this.props.product.brand + " " + this.props.product.name}
-          </p>
+          <p className="Name">{brand + " " + name}</p>
           <p className="Price">{this.amountOfCurrency()}</p>
         </Link>
         {/* using package that lets us smoothly expand components */}
         <div className="ExpandAttributes">
-          <Expand open={this.state.expanded}>
+          <Expand open={expanded}>
             <button
               className="EmptyCartCircle"
               onClick={() => this.addToCartHandler()}
@@ -164,24 +169,26 @@ class ProductCard extends React.Component {
             {this.setAttributes()}
             <div className="ProductCardQuantityContainer">
               <span className="QuantityName"> Quantity </span>
-              <button
-                className="ProductCardQuantityContainerButton"
-                disabled={this.state.quantity < 1}
-                onClick={() => this.decrementHandler()}
-              >
-                <img src={Line} alt="line"></img>
-              </button>
               <div>
-                <div className="Quantity">{this.state.quantity}</div>
+                <button
+                  className="ProductCardQuantityContainerButton"
+                  disabled={quantity < 2}
+                  onClick={() => this.decrementHandler()}
+                >
+                  <img src={Line} alt="line"></img>
+                </button>
+                <div>
+                  <div className="Quantity">{quantity}</div>
+                </div>
+                <button
+                  className="ProductCardQuantityContainerButton"
+                  onClick={() => this.incrementHandler()}
+                >
+                  <img src={Crossing} alt="cross"></img>
+                </button>
               </div>
-              <button
-                className="ProductCardQuantityContainerButton"
-                onClick={() => this.incrementHandler()}
-              >
-                <img src={Crossing} alt="cross"></img>
-              </button>
             </div>
-            <Expand open={this.state.check}>
+            <Expand open={check}>
               <span className="QuantityName">Please select all attributes</span>
             </Expand>
           </Expand>

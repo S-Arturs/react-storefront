@@ -1,5 +1,6 @@
 import React from "react";
 import "./Attributes.css";
+
 class Attributes extends React.Component {
   constructor(props) {
     super(props);
@@ -7,66 +8,74 @@ class Attributes extends React.Component {
       activeAttributeIndex: this.props.attribute.selectedvalue,
     };
   }
-  // this component gets called from multiple parents, 
+  // this component gets called from multiple parents,
   // so functionality and styling depend on the origin (parent)
-  clickHandler(index) {
-    if (
-      this.props.origin === "productCard" ||
-      this.props.origin === "productPage"
-    ) {
-      this.props.sendAttributeData([this.props.index, index]);
+  clickHandler(id) {
+    const { origin, sendAttributeData, index } = this.props;
+    if (origin === "productCard" || origin === "productPage") {
+      sendAttributeData([index, id]);
       this.setState({
-        activeAttributeIndex: index,
+        activeAttributeIndex: id,
       });
     }
   }
+  setAttributeButtonClass(index) {
+    const { origin, attribute } = this.props;
+    let className = "AttributeButtons";
+    if (origin === "cart" || origin === "productPage") {
+      className += " Large";
+    } else {
+      className += " Small";
+    }
+    if (!attribute.type === "swatch") {
+      className += " Swatch";
+    } else {
+      className += " Text";
+    }
+    if (index === this.state.activeAttributeIndex) {
+      className += " Active";
+    } else {
+      className += " Inactive";
+    }
+    return className;
+  }
 
-  setAttributeItems(){
-    return this.props.attribute.items.map((choice, index) => {
-      let background = "#ffffff";
+  setAttributeItems() {
+    const { attribute } = this.props;
+    return attribute.items.map((choice, index) => {
+      this.setAttributeButtonClass(index);
+      let style;
       let buttonText = choice.value;
-      let opacity = 0.5;
-      let color = "Black";
-      // swatch attributes have different style requirements
-      if (this.props.attribute.type === "swatch") {
-        background = choice.value;
-        buttonText = " ";
-        if (index === this.state.activeAttributeIndex) opacity = 1;
-      } else {
-        if (index === this.state.activeAttributeIndex) {
-          background = "#1D1F22";
-          opacity = 1;
-          color = "white";
-        }
+      if (attribute.type === "swatch") {
+        style = { backgroundColor: `${choice.value}` };
+        buttonText = "";
       }
       return (
         <button
           key={index}
-          className={
-            this.props.origin === "cart" ||
-            this.props.origin === "productPage"
-              ? "AttributesButtons"
-              : "MiniAttributesButtons"
-          }
-          style={{
-            backgroundColor: `${background}`,
-            opacity: `${opacity}`,
-            color: `${color}`,
-          }}
+          className={this.setAttributeButtonClass(index)}
+          style={style}
           type="button"
           onClick={() => this.clickHandler(index)}
         >
           {buttonText}
         </button>
       );
-    })
-
+    });
   }
-
+  setAttributeNameClassName() {
+    const { origin } = this.props;
+    let className = "ProductCardAttributeName";
+    if (origin === "cart" || origin === "productPage") {
+      className += " Large";
+    }
+    return className;
+  }
   render() {
+    const { attribute: { name }} = this.props;
     return (
       <div>
-        <p className="ProductCardAttributeName">{this.props.attribute.name}</p>
+        <p className={this.setAttributeNameClassName()}>{name}</p>
         {this.setAttributeItems()}
       </div>
     );

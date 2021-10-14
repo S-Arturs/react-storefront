@@ -2,6 +2,7 @@
   box-shadow: 0px 4px 35px 0px #a8acb030;
 }
 .Image {
+  margin-top: 12px;
   height: 90%;
   max-width: 90%;
   object-fit: scale-down;
@@ -78,6 +79,10 @@ a {
 .ProductCardQuantityContainer {
   margin-top: 4px;
   display: flex;
+  flex-direction: column;
+}
+.ProductCardQuantityContainer div{
+  display: flex;
   flex-direction: row;
 }
 .ProductCardQuantityContainerButton {
@@ -92,11 +97,15 @@ a {
   width: 24px;
 }
 .QuantityName {
+  font-size: 14px;
+  padding-top: 2px;
+  padding-bottom: 4px;
   margin-right: 12px;
   font-family: raleway;
+  font-weight: 600;
 }
 .Quantity {
-  text-align: center;
+  justify-content: center;
   width: 24px;
   font-family: raleway;
 }

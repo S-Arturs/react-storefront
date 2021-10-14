@@ -5,6 +5,7 @@ import { setCurrency } from "../../Actions";
 import Expand from "react-expand-animated";
 import { fetchCurrencies } from "../../Api/Fetch";
 import { getSymbol } from "../../Helpers/CurrencyFormatter";
+import uuid from "react-uuid";
 
 const mapStateToProps = (state) => {
   return {
@@ -40,7 +41,7 @@ class NBCurrencyPicker extends React.Component {
     return this.state.currencies.map((currencyName, id) => (
       <button
         className="CurrencyButton"
-        key={id}
+        key={uuid()}
         type="button"
         onClick={() => {
           this.props.setCurrency({
@@ -55,10 +56,11 @@ class NBCurrencyPicker extends React.Component {
     ))
   }
   render() {
+    const {expanded} = this.props
     if (!this.state.fetched) return null;
     return (
       <div className="CurrencyPicker">
-        <Expand open={this.props.expanded}>
+        <Expand open={expanded}>
           <div className="CurrenciesContainer">
             {this.setCurrencies()}
           </div>

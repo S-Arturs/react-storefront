@@ -4,8 +4,9 @@ import ProductCard from "../Components/ProductCard";
 import { connect } from "react-redux";
 import { addToCart, setCategory } from "../Actions";
 import { fetchProducts } from "../Api/Fetch";
+import uuid from "react-uuid";
 
-const mapStateToProps = (state) => {
+const mapStateToProps = () => {
   return {};
 };
 
@@ -30,44 +31,50 @@ class Home extends React.Component {
 
   async componentDidMount() {
     if (!this.state.fetched) {
-      await this.loadFetchedData()
+      await this.loadFetchedData();
     }
   }
 
   async componentDidUpdate() {
     if (this.props.match.params.category !== this.state.prevCategory) {
-       await this.loadFetchedData()
+      await this.loadFetchedData();
     }
   }
-  async loadFetchedData(){
-    this.props.setCategory(this.props.match.params.category);
-      let queryResult = await fetchProducts(this.props.match.params.category);
-      if (queryResult !== "error") {
-        this.setState({
-          prevCategory: this.props.match.params.category,
-          fetched: true,
-          fetchedData: queryResult,
-        });
-      } else {
-        this.setState({ fetched: false });
-      }
+  async loadFetchedData() {
+    const {
+      setCategory,
+      match: {
+        params: { category },
+      },
+    } = this.props;
+    setCategory(category);
+    let queryResult = await fetchProducts(category);
+    if (queryResult !== "error") {
+      this.setState({
+        prevCategory: category,
+        fetched: true,
+        fetchedData: queryResult,
+      });
+    } else {
+      this.setState({ fetched: false });
+    }
   }
-  setProductCards(){
-    return this.state.fetchedData.category.products.map((product, id) => (
-      <ProductCard product={product} key={id} />
-    ))
+  setProductCards() {
+    const { products } = this.state.fetchedData.category;
+    return products.map((product, id) => (
+      <ProductCard product={product} key={uuid()} />
+    ));
+  }
+  setCategoryTitle() {
+    return capitalizeFirstLetter(this.props.match.params.category);
   }
   render() {
     if (!this.state.fetched) return null;
     return (
       <div className="CenteringContainer">
         <div className="ShopContainer">
-          <h1 className="CategoryHeader">
-            {capitalizeFirstLetter(this.props.match.params.category)}
-          </h1>
-          <div className="Window">
-            {this.setProductCards()}
-          </div>
+          <h1 className="CategoryHeader">{this.setCategoryTitle()}</h1>
+          <div className="Window">{this.setProductCards()}</div>
         </div>
       </div>
     );

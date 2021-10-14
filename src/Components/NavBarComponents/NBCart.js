@@ -5,7 +5,8 @@ import { connect } from "react-redux";
 import { addToCart } from "../../Actions";
 import NBCartProductCard from "./NBCartProductCard";
 import { Link } from "react-router-dom";
-import { getFormattedCurrency } from '../../Helpers/CurrencyFormatter';
+import { getFormattedCurrency } from "../../Helpers/CurrencyFormatter";
+import uuid from 'react-uuid'
 
 const mapStateToProps = (state) => {
   return {
@@ -32,26 +33,25 @@ class NBCart extends React.Component {
   }
 
   componentDidMount() {
-    this.setQuantityAndAmount()
+    this.setQuantityAndAmount();
   }
 
-  getRefresh() {  
+  getRefresh() {
     this.forceUpdate();
     this.props.refreshParent();
   }
 
   componentDidUpdate() {
-    this.setQuantityAndAmount()
+    this.setQuantityAndAmount();
   }
 
-  setQuantityAndAmount(){
+  setQuantityAndAmount() {
+    const { cart, currency } = this.props;
     let totalAmount = 0;
     let totalQuantity = 0;
-    for (let i = 0; i < this.props.cart.length; i++) {
-      totalQuantity += this.props.cart[i].quantity;
-      totalAmount +=
-        this.props.cart[i].prices[this.props.currency.id].amount *
-        this.props.cart[i].quantity;
+    for (let i = 0; i < cart.length; i++) {
+      totalQuantity += cart[i].quantity;
+      totalAmount += cart[i].prices[currency.id].amount * cart[i].quantity;
     }
     totalAmount = Math.round(totalAmount * 100) / 100;
     if (totalAmount !== this.state.totalAmount) {
@@ -62,54 +62,59 @@ class NBCart extends React.Component {
     }
   }
 
-  setProductCards(){
+  setProductCards() {
     return this.props.cart.map((e, id) => (
       <NBCartProductCard
         origin={"NBCart"}
         refreshParent={this.getRefresh}
         index={id}
         product={e}
-        key={id}
+        key={uuid()}
       />
-    ))
+    ));
   }
 
-  setClassName(){
-    if(this.props.expanded) return "NBCartMiniContainer"
-    return "NBCartMiniContainer Shrunk"
+  setClassName() {
+    if (this.props.expanded) return "NBCartMiniContainer";
+    return "NBCartMiniContainer Shrunk";
+  }
+
+  setFormattedCurrency() {
+    return getFormattedCurrency(
+      this.props.currency.name,
+      this.state.totalAmount
+    );
   }
   render() {
+    const { expanded, sendTint } = this.props;
     return (
-      <div className={this.setClassName()}>
-        <Expand
-          open={this.props.expanded}
-          transitions={["opacity", "background"]}
-        >
-          <p className="MyBag">
-            My bag, <b className="ItemCount">{this.props.cart.length} items</b>
-          </p>
-          {this.setProductCards()}
-          <div className="TotalContainer">
-            <p>Total</p>
-            <b className="TotalContainerAmount">
-              {getFormattedCurrency(this.props.currency.name ,this.state.totalAmount)}
-            </b>
-          </div>
-
-          <span>
-            <div className="ButtonsContainer">
-              <Link className="ViewBagLink" to={"/cart"}>
-                <button
-                  className="ViewBagButton"
-                  onClick={() => this.props.sendTint()}
-                >
-                  VIEW BAG
-                </button>
-              </Link>
-              <button className="CheckOutButton">CHECK OUT</button>
+      <div className="OuterContainer">
+        <div className={this.setClassName()}>
+          <Expand open={expanded} transitions={["opacity", "background"]}>
+            <p className="MyBag">
+              My bag,{" "}
+              <b className="ItemCount">{this.state.totalQuantity} items</b>
+            </p>
+            {this.setProductCards()}
+            <div className="TotalContainer">
+              <p>Total</p>
+              <b className="TotalContainerAmount">
+                {this.setFormattedCurrency()}
+              </b>
             </div>
-          </span>
-        </Expand>
+
+            <span>
+              <div className="ButtonsContainer">
+                <Link className="ViewBagLink" to={"/cart"}>
+                  <button className="ViewBagButton" onClick={() => sendTint()}>
+                    VIEW BAG
+                  </button>
+                </Link>
+                <button className="CheckOutButton">CHECK OUT</button>
+              </div>
+            </span>
+          </Expand>
+        </div>
       </div>
     );
   }

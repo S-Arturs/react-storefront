@@ -3,6 +3,7 @@ import "./CartPage.css";
 import { connect } from "react-redux";
 import NBCartProductCard from "../Components/NavBarComponents/NBCartProductCard";
 import { Link } from "react-router-dom";
+import uuid from 'react-uuid'
 
 const mapStateToProps = (state) => {
   return {
@@ -29,7 +30,7 @@ class Cart extends React.Component {
         refreshParent={this.getRefresh}
         index={index}
         product={product}
-        key={index}
+        key={uuid()}
       />
     ));
   }

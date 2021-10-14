@@ -1,28 +1,17 @@
-.MiniAttributesButtons{
-    margin-right: 8px;
-    min-height: 24px;
-    border: 1px solid var(--c-black);
-    box-sizing: border-box;
-    height:   24px ;
-    min-width:  24px ;
-    font-size: 12px;
-    text-align: center;
-    margin-top: 4px;
-    line-height: 0;
-    margin-bottom: 0px ;
-    padding-right: 4px;
-    padding-left: 4px;
-}
-
 .ProductCardAttributeName{
     font-size: 14px;
-    padding-top: 10px;
+    padding-top: 6px;
     margin-right: 12px;
     font-family: raleway;
-    font-weight: 700;
+    font-weight: 600;
 }
-
-.AttributesButtons{
+.ProductCardAttributeName.Large{
+    font-size: 18px;
+    font-family: robotocondensed;
+    font-weight: 900;
+}
+.AttributeButtons{
+    background-color: white;
     margin-right: 8px;
     min-height: 24px;
     border: 1px solid var(--c-black);
@@ -37,9 +26,16 @@
     padding-right: 4px;
     padding-left: 4px;
 }
-
-.ProductPageAttributeName{
-    font-size: 18px;
-    font-family: robotocondensed;
-    font-weight: 900;
+.AttributeButtons.Small{
+    margin-right: 6px;
+    height: 24px ;
+    min-width: 24px ;
+    margin-bottom: 0px ;
+}
+.AttributeButtons.Text.Active{
+    background-color: #1D1F22;
+    color: white;
+}
+.AttributeButtons.Inactive{
+    opacity: 0.5;
 }

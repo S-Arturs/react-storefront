@@ -8,9 +8,10 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import NBCurrencyPicker from "./NBCurrencyPicker";
 import NBCart from "./NBCart";
-import { setCategory } from "../../Actions";
+import {
+  setCategory,
+} from "../../Actions";
 import { getSymbol } from "../../Helpers/CurrencyFormatter";
-import { subscribeAfter } from "redux-subscribe-action";
 
 const mapStateToProps = (state) => {
   return {
@@ -49,7 +50,6 @@ class NavBar extends React.Component {
       });
     }
   }
-  unsubscribe = subscribeAfter(() => this.forceUpdate());
   getCloseCurrency() {
     this.setState({ showCurrency: false });
   }
@@ -108,12 +108,11 @@ class NavBar extends React.Component {
     return totalQuantity;
   }
   setCategoryButtons() {
-    return this.props.categories.map((category, id) => (
-      <Link key={id} to={`/shop/${this.props.categories[id].name}`}>
+    const { categories } = this.props;
+    return categories.map((category, id) => (
+      <Link key={id} to={`/shop/${categories[id].name}`}>
         <button
-          className={this.setCategorySelectorClassname(
-            this.props.categories[id].name
-          )}
+          className={this.setCategorySelectorClassname(categories[id].name)}
           type="button"
           onClick={() => this.props.setCategory(category.name)}
         >
@@ -126,8 +125,14 @@ class NavBar extends React.Component {
     if (this.state.showCurrency) return "Arrow Flipped";
     return "Arrow";
   }
+  setItemAmountCircleClassname() {
+    if (this.props.cart.length > 0) return "ItemAmountCircle";
+    return "ItemAmountCircle Hidden";
+  }
   render() {
-    if (this.props.categories.length === 0) return null;
+    const { categories, currency } = this.props;
+    const { showCurrency, quantity, showCart } = this.state;
+    if (categories.length === 0) return null;
     return (
       <div className="NavBar">
         <div className="CategoriesContainer">{this.setCategoryButtons()}</div>
@@ -143,14 +148,14 @@ class NavBar extends React.Component {
               this.handleCurrencyPickerButtonClick();
             }}
           >
-            {getSymbol(this.props.currency.name)}
+            {getSymbol(currency.name)}
             <img src={Arrow} className={this.setArrowClassname()} alt="arrow" />
           </button>
           <OutsideClickHandler
             onOutsideClick={() => this.handleClickOutsideCurrencyPicker()}
           >
             <NBCurrencyPicker
-              expanded={this.state.showCurrency}
+              expanded={showCurrency}
               sendCloseCurrency={this.getCloseCurrency}
             />
           </OutsideClickHandler>
@@ -158,16 +163,16 @@ class NavBar extends React.Component {
             className="CartButton"
             onClick={() => this.handleCartButtonClick()}
           >
-            {this.props.cart.length > 0 && (
-              <div className="ItemAmountCircle">{this.state.quantity}</div>
-            )}
+            <div className={this.setItemAmountCircleClassname()}>
+              <p>{quantity}</p>
+            </div>
             <img src={Cart} className="CartSVG" alt="cart"></img>
           </button>
           <OutsideClickHandler
             onOutsideClick={() => this.handleClickOutsideCart()}
           >
             <NBCart
-              expanded={this.state.showCart}
+              expanded={showCart}
               sendTint={this.getTint}
               refreshParent={this.getRefresh}
             />

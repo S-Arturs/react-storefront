@@ -16,6 +16,9 @@
   object-fit: scale-down;
   margin-bottom: 12px;
 }
+.SidePictures:hover {
+  transform: scale(1.1);
+}
 .InformationContainer {
   text-align: left;
   max-width: 300px;

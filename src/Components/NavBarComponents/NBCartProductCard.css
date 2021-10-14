@@ -14,6 +14,9 @@
 .NBCartContainer .RemoveItem {
   z-index: 1;
 }
+.RemoveItem:hover {
+  background-color: rgb(226, 87, 63);
+}
 .QuantityContainerNB {
   font-family: raleway;
   font-weight: 600;
@@ -74,6 +77,9 @@
   width: 24px;
   position: absolute;
 }
+.DecrementButton:hover {
+  background-color: rgb(245, 245, 245);
+}
 .RemoveItem {
   position: relative;
   left: 32px;
@@ -93,6 +99,9 @@
   background-color: white;
   height: 24px;
   width: 24px;
+}
+.UniversalButton:hover {
+  background-color: rgb(245, 245, 245);
 }
 .SVGLine {
   position: absolute;

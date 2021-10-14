@@ -172,8 +172,8 @@ class NBCartProductCard extends React.Component {
           </div>
           <div className="NamePriceAttributeSubContainer">
 
-            {this.renderQuantityButtons}
-            
+            {this.renderQuantityButtons()}
+
             <div className="ImageContainerForCart">
               <button
                 className="PreviousButton"

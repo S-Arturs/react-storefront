@@ -11,7 +11,7 @@ import throttle from 'lodash/throttle'
 import subscribeActionMiddleware from 'redux-subscribe-action';
 
 const persistedState = loadState();
-const composedEnhancer = compose(window.__REDUX_DEVTOOLS_EXTENSION__(), applyMiddleware(subscribeActionMiddleware))
+const composedEnhancer = compose(applyMiddleware(subscribeActionMiddleware))
 const store = createStore(
   allReducer, 
   persistedState,
